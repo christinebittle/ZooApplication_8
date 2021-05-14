@@ -13,7 +13,7 @@ Videos which cover this codebase:
 - Check that the database is created using (View > SQL Server Object Explorer > MSSQLLocalDb > ..)
 - Run API commands through CURL to create new animals
 
-Make sure to utilize jsondata/animal.json to formulate data you wish to send as part of the POST requests. {id} should be replaced with the animal's primary key ID.
+Make sure to utilize jsondata/animal.json to formulate data you wish to send as part of the POST requests. {id} should be replaced with the animal's primary key ID. The port number may not always be the same
 
 Get a List of Animals
 curl https://localhost:44324/api/animaldata/listanimals
