@@ -29,3 +29,10 @@ curl -d "" https://localhost:44324/api/animaldata/deleteanimal/{id}
 
 Update an Animal (existing animal info including id must be included in animal.json)
 curl -H "Content-Type:application/json" -d @animal.json https://localhost:44324/api/animaldata/updateanimal/{id}
+
+# Running the Views for List, Details, New
+- Use SQL Server Object Explorer to add a new Species
+- Take note of the Species ID
+- Navigate to /Animal/New
+- Input the Name, Weight(kg) and Species ID
+- click "Add"
