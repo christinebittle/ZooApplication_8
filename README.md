@@ -6,6 +6,7 @@ Videos which cover this codebase:
 - [Building With ASP.NET - Project Setup](https://youtu.be/NSpYP1YW9p0)
 - [Building with ASP.NET - Object Relational Mapping](https://youtu.be/V1emgCxxRtI)
 - [Building with ASP.NET - Base CRUD](https://youtu.be/uEgWxIZmX48)
+- [Building with ASP.NET - HTTP Client & Views](https://youtu.be/dFIaeluKcAA)
 
 # Running this project 
 - Make sure there is an App_Data folder in the project (Right click solution > View in File Explorer)
