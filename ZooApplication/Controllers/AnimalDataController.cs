@@ -59,21 +59,15 @@ namespace ZooApplication.Controllers
         [ResponseType(typeof(void))]
         [HttpPost]
         public IHttpActionResult UpdateAnimal(int id, Animal animal)
-        {
-            Debug.WriteLine("I have reached the update animal method!");
+        { 
             if (!ModelState.IsValid)
-            {
-                Debug.WriteLine("Model State is invalid");
+            {      
                 return BadRequest(ModelState);
             }
 
             if (id != animal.AnimalID)
             {
-                Debug.WriteLine("ID mismatch");
-                Debug.WriteLine("GET parameter" + id);
-                Debug.WriteLine("POST parameter" + animal.AnimalID);
-                Debug.WriteLine("POST parameter" + animal.AnimalName);
-                Debug.WriteLine("POST parameter " + animal.AnimalWeight);
+                
                 return BadRequest();
             }
 
@@ -87,7 +81,6 @@ namespace ZooApplication.Controllers
             {
                 if (!AnimalExists(id))
                 {
-                    Debug.WriteLine("Animal not found");
                     return NotFound();
                 }
                 else
@@ -95,8 +88,6 @@ namespace ZooApplication.Controllers
                     throw;
                 }
             }
-
-            Debug.WriteLine("None of the conditions triggered");
             return StatusCode(HttpStatusCode.NoContent);
         }
 

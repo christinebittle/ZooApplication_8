@@ -1,0 +1,23 @@
+﻿
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create Animal</h2>
+<form action="/Animal/Create" method="POST">
+    <div>
+        <label>Name:</label> <input type="text" name="AnimalName" />
+    </div>
+    <div>
+        <label>Weight (kg):</label> <input type="number" name="AnimalWeight" />
+    </div>
+    <div>
+        <label>Species ID:</label> <input type="number" name="SpeciesID" />
+    </div>
+    <div>
+        <input type="submit" value="Add Animal" />
+
+    </div>
+</form>
+
+

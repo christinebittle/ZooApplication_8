@@ -1,0 +1,14 @@
+﻿@model IEnumerable<ZooApplication.Models.AnimalDto>
+@{
+    ViewBag.Title = "List";
+}
+
+<h2>List</h2>
+@foreach(var animal in Model)
+{
+    <h2><a href="/Animal/Details/@animal.AnimalID">@animal.AnimalName</a></h2>
+    <div>weight: @animal.AnimalWeight kg</div>
+    <div>species: @animal.SpeciesName</div>
+
+
+}
