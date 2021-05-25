@@ -1,0 +1,26 @@
+﻿@model ZooApplication.Models.SpeciesDto
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Update Species</h2>
+<form action="/Species/Update/@Model.SpeciesID" method="POST">
+    <div style="display:none;">
+        @* Pass through the Species ID *@
+        <input type="text" name="SpeciesID" value="@Model.SpeciesID" />
+    </div>
+    <div>
+        <label>Name:</label> <input type="text" name="SpeciesName" value="@Model.SpeciesName" />
+    </div>
+    <div>
+        <label>Endangered:</label>
+        <input type="checkbox" name="SpeciesEndangered"
+            @(Model.SpeciesEndangered ? "checked" : "")
+            />
+    </div>
+    <div>
+        <input type="submit" value="Update Species" />
+
+    </div>
+</form>

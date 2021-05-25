@@ -1,0 +1,13 @@
+﻿@model IEnumerable<ZooApplication.Models.SpeciesDto>
+@{
+    ViewBag.Title = "List";
+}
+
+<h2>List</h2>
+<a href="/Species/New">New Species</a>
+@foreach(var Species in Model)
+{
+    <h2><a href="/Species/Details/@Species.SpeciesID">@Species.SpeciesName</a></h2>
+    <div>Endangered: @Species.SpeciesEndangered</div>
+
+}

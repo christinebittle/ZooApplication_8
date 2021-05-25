@@ -31,6 +31,8 @@ namespace ZooApplication.Models
 
         public DbSet<Species> Species { get; set; }
 
+        public DbSet<Keeper> Keepers { get; set; }
+
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();

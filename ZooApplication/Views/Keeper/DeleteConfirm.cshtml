@@ -1,0 +1,12 @@
+﻿@model ZooApplication.Models.KeeperDto
+
+@{
+    ViewBag.Title = "DeleteConfirm";
+}
+
+<h2>Are you sure you want to delete this Keeper?</h2>
+<a href="/Keeper/List">Cancel</a>
+<h3>Name: @Model.KeeperFirstName @Model.KeeperLastName</h3>
+<form action="/Keeper/Delete/@Model.KeeperID" method="POST">
+    <input type="submit" value="Confirm Delete"/>
+</form>

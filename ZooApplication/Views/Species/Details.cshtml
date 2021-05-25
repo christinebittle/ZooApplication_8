@@ -1,0 +1,15 @@
+﻿@model ZooApplication.Models.SpeciesDto 
+
+
+@{
+    ViewBag.Title = "View";
+}
+
+<a href="/Species/List">Go back to list</a>
+<br />
+<a href="/Species/Edit/@Model.SpeciesID">Update</a>
+<br />
+<a style="color:#ab2020;" href="/Species/DeleteConfirm/@Model.SpeciesID">Delete</a>
+<h2>@Model.SpeciesName</h2>
+<div>Endangered: @Model.SpeciesEndangered</div>
+

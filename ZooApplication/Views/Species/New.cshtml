@@ -1,0 +1,20 @@
+﻿
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create Species</h2>
+<form action="/Species/Create" method="POST">
+    <div>
+        <label>Name:</label> <input type="text" name="SpeciesName"  />
+    </div>
+    <div>
+        <label>Endangered:</label>
+        <input type="checkbox" name="SpeciesEndangered"/>
+    </div>
+    <div>
+        <input type="submit" value="Create Species" />
+
+    </div>
+</form>

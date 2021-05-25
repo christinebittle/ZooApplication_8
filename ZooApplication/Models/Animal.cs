@@ -37,6 +37,7 @@ namespace ZooApplication.Models
         //weight is in kg
         public int AnimalWeight { get; set; }
 
+        public int SpeciesID { get; set; }
         public string SpeciesName { get; set; }
 
         

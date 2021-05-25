@@ -1,0 +1,13 @@
+HTTP/1.1 405 Method Not Allowed
+Cache-Control: no-cache
+Pragma: no-cache
+Allow: POST
+Content-Type: application/json; charset=utf-8
+Expires: -1
+Server: Microsoft-IIS/10.0
+X-AspNet-Version: 4.0.30319
+X-SourceFiles: =?UTF-8?B?QzpcVXNlcnNcU29tZWJvZHlcU291cmNlXFJlcG9zXFpvb0FwcGxpY2F0aW9uXzNcWm9vQXBwbGljYXRpb25cYXBpXGFuaW1hbGRhdGFcZGVsZXRlYW5pbWFsXDM=?=
+X-Powered-By: ASP.NET
+Date: Tue, 25 May 2021 17:29:53 GMT
+Content-Length: 72
+

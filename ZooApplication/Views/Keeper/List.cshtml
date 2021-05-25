@@ -1,0 +1,11 @@
+﻿@model IEnumerable<ZooApplication.Models.KeeperDto>
+@{
+    ViewBag.Title = "List";
+}
+
+<h2>List</h2>
+<a href="/Keeper/New">New Keeper</a>
+@foreach(var Keeper in Model)
+{
+    <h2><a href="/Keeper/Details/@Keeper.KeeperID">@Keeper.KeeperLastName, @Keeper.KeeperFirstName</a></h2>
+}

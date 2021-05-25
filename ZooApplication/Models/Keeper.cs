@@ -19,4 +19,14 @@ namespace ZooApplication.Models
         public ICollection<Animal> Animals { get; set; }
 
     }
+
+
+    public class KeeperDto
+    {
+        public int KeeperID { get; set; }
+        public string KeeperFirstName { get; set; }
+        public string KeeperLastName { get; set; }
+        
+
+    }
 }

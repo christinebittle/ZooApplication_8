@@ -1,0 +1,13 @@
+﻿@model ZooApplication.Models.SpeciesDto
+
+@{
+    ViewBag.Title = "DeleteConfirm";
+}
+
+<h2>Are you sure you want to delete this Species?</h2>
+<a href="/Species/List">Cancel</a>
+<h3>Name: @Model.SpeciesName</h3>
+<p>Endangered: @Model.SpeciesEndangered</p>
+<form action="/Species/Delete/@Model.SpeciesID" method="POST">
+    <input type="submit" value="Confirm Delete"/>
+</form>

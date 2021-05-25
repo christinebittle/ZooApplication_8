@@ -17,9 +17,19 @@ namespace ZooApplication.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: api/AnimalData/ListAnimals
+        /// <summary>
+        /// Returns all animals in the system.
+        /// </summary>
+        /// <returns>
+        /// HEADER: 200 (OK)
+        /// CONTENT: all animals in the database, including their associated species.
+        /// </returns>
+        /// <example>
+        /// GET: api/AnimalData/ListAnimals
+        /// </example>
         [HttpGet]
-        public IEnumerable<AnimalDto> ListAnimals()
+        [ResponseType(typeof(AnimalDto))]
+        public IHttpActionResult ListAnimals()
         {
             List<Animal> Animals = db.Animals.ToList();
             List<AnimalDto> AnimalDtos = new List<AnimalDto>();
@@ -28,14 +38,27 @@ namespace ZooApplication.Controllers
                 AnimalID = a.AnimalID,
                 AnimalName = a.AnimalName,
                 AnimalWeight = a.AnimalWeight,
+                SpeciesID = a.Species.SpeciesID,
                 SpeciesName = a.Species.SpeciesName
             }));
 
-            return AnimalDtos;
+            return Ok(AnimalDtos);
         }
 
-        // GET: api/AnimalData/FindAnimal/5
-        [ResponseType(typeof(Animal))]
+        /// <summary>
+        /// Returns all animals in the system.
+        /// </summary>
+        /// <returns>
+        /// HEADER: 200 (OK)
+        /// CONTENT: An animal in the system matching up to the animal ID primary key
+        /// or
+        /// HEADER: 404 (NOT FOUND)
+        /// </returns>
+        /// <param name="id">The primary key of the animal</param>
+        /// <example>
+        /// GET: api/AnimalData/FindAnimal/5
+        /// </example>
+        [ResponseType(typeof(AnimalDto))]
         [HttpGet]
         public IHttpActionResult FindAnimal(int id)
         {
@@ -45,6 +68,7 @@ namespace ZooApplication.Controllers
                 AnimalID = Animal.AnimalID,
                 AnimalName = Animal.AnimalName,
                 AnimalWeight = Animal.AnimalWeight,
+                SpeciesID = Animal.Species.SpeciesID,
                 SpeciesName = Animal.Species.SpeciesName
             };
             if (Animal == null)
@@ -55,7 +79,22 @@ namespace ZooApplication.Controllers
             return Ok(AnimalDto);
         }
 
-        // POST: api/AnimalData/UpdateAnimal/5
+        /// <summary>
+        /// Updates a particular animal in the system with POST Data input
+        /// </summary>
+        /// <param name="id">Represents the Animal ID primary key</param>
+        /// <param name="animal">JSON FORM DATA of an animal</param>
+        /// <returns>
+        /// HEADER: 204 (Success, No Content Response)
+        /// or
+        /// HEADER: 400 (Bad Request)
+        /// or
+        /// HEADER: 404 (Not Found)
+        /// </returns>
+        /// <example>
+        /// POST: api/AnimalData/UpdateAnimal/5
+        /// FORM DATA: Animal JSON Object
+        /// </example>
         [ResponseType(typeof(void))]
         [HttpPost]
         public IHttpActionResult UpdateAnimal(int id, Animal animal)
@@ -91,7 +130,20 @@ namespace ZooApplication.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/AnimalData/AddAnimal
+        /// <summary>
+        /// Adds an animal to the system
+        /// </summary>
+        /// <param name="animal">JSON FORM DATA of an animal</param>
+        /// <returns>
+        /// HEADER: 201 (Created)
+        /// CONTENT: Animal ID, Animal Data
+        /// or
+        /// HEADER: 400 (Bad Request)
+        /// </returns>
+        /// <example>
+        /// POST: api/AnimalData/AddAnimal
+        /// FORM DATA: Animal JSON Object
+        /// </example>
         [ResponseType(typeof(Animal))]
         [HttpPost]
         public IHttpActionResult AddAnimal(Animal animal)
@@ -107,7 +159,19 @@ namespace ZooApplication.Controllers
             return CreatedAtRoute("DefaultApi", new { id = animal.AnimalID }, animal);
         }
 
-        // POST: api/AnimalData/DeleteAnimal/5
+        /// <summary>
+        /// Deletes an animal from the system by it's ID.
+        /// </summary>
+        /// <param name="id">The primary key of the animal</param>
+        /// <returns>
+        /// HEADER: 200 (OK)
+        /// or
+        /// HEADER: 404 (NOT FOUND)
+        /// </returns>
+        /// <example>
+        /// POST: api/AnimalData/DeleteAnimal/5
+        /// FORM DATA: (empty)
+        /// </example>
         [ResponseType(typeof(Animal))]
         [HttpPost]
         public IHttpActionResult DeleteAnimal(int id)

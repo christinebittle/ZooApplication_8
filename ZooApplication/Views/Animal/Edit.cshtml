@@ -1,0 +1,26 @@
+﻿@model ZooApplication.Models.AnimalDto
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Update Animal</h2>
+<form action="/Animal/Update/@Model.AnimalID" method="POST">
+    <div style="display:none;">
+        @* Pass through the animal ID *@
+        <input type="text" name="AnimalID" value="@Model.AnimalID" />
+    </div>
+    <div>
+        <label>Name:</label> <input type="text" name="AnimalName" value="@Model.AnimalName" />
+    </div>
+    <div>
+        <label>Weight (kg):</label> <input type="number" name="AnimalWeight" value="@Model.AnimalWeight" />
+    </div>
+    <div>
+        <label>Species ID:</label> <input type="number" name="SpeciesID" value="@Model.SpeciesID" />
+    </div>
+    <div>
+        <input type="submit" value="Update Animal" />
+
+    </div>
+</form>

@@ -1,0 +1,14 @@
+﻿@model ZooApplication.Models.KeeperDto 
+
+
+@{
+    ViewBag.Title = "View";
+}
+
+<a href="/Keeper/List">Go back to list</a>
+<br />
+<a href="/Keeper/Edit/@Model.KeeperID">Update</a>
+<br />
+<a style="color:#ab2020;" href="/Keeper/DeleteConfirm/@Model.KeeperID">Delete</a>
+<h2>@Model.KeeperFirstName @Model.KeeperLastName</h2>
+

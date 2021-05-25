@@ -184,7 +184,11 @@
     <Compile Include="Controllers\AnimalController.cs" />
     <Compile Include="Controllers\AnimalDataController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\KeeperController.cs" />
+    <Compile Include="Controllers\KeeperDataController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\SpeciesController.cs" />
+    <Compile Include="Controllers\SpeciesDataController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -283,6 +287,20 @@
     <Content Include="Views\Animal\Details.cshtml" />
     <Content Include="Views\Animal\New.cshtml" />
     <Content Include="Views\Animal\Error.cshtml" />
+    <Content Include="Views\Animal\Edit.cshtml" />
+    <Content Include="Views\Animal\DeleteConfirm.cshtml" />
+    <Content Include="Views\Species\DeleteConfirm.cshtml" />
+    <Content Include="Views\Species\Details.cshtml" />
+    <Content Include="Views\Species\Edit.cshtml" />
+    <Content Include="Views\Species\Error.cshtml" />
+    <Content Include="Views\Species\List.cshtml" />
+    <Content Include="Views\Species\New.cshtml" />
+    <Content Include="Views\Keeper\DeleteConfirm.cshtml" />
+    <Content Include="Views\Keeper\Details.cshtml" />
+    <Content Include="Views\Keeper\Edit.cshtml" />
+    <Content Include="Views\Keeper\Error.cshtml" />
+    <Content Include="Views\Keeper\List.cshtml" />
+    <Content Include="Views\Keeper\New.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

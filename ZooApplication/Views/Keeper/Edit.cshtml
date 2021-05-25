@@ -1,0 +1,24 @@
+﻿@model ZooApplication.Models.KeeperDto
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Update Keeper</h2>
+<form action="/Keeper/Update/@Model.KeeperID" method="POST">
+    <div style="display:none;">
+        @* Pass through the Keeper ID *@
+        <input type="text" name="KeeperID" value="@Model.KeeperID" />
+    </div>
+    <div>
+        <label>First Name:</label> <input type="text" name="KeeperFirstName" value="@Model.KeeperFirstName" />
+    </div>
+    <div>
+        <label>Last Name:</label> <input type="text" name="KeeperLastName" value="@Model.KeeperLastName" />
+    </div>
+    
+    <div>
+        <input type="submit" value="Update Keeper" />
+
+    </div>
+</form>

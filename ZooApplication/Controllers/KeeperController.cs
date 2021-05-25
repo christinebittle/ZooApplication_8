@@ -11,56 +11,56 @@ using System.Web.Script.Serialization;
 
 namespace ZooApplication.Controllers
 {
-    public class AnimalController : Controller
+    public class KeeperController : Controller
     {
         private static readonly HttpClient client;
         private JavaScriptSerializer jss = new JavaScriptSerializer();
 
-        static AnimalController()
+        static KeeperController()
         {
             client = new HttpClient();
-            client.BaseAddress = new Uri("https://localhost:44324/api/animaldata/");
+            client.BaseAddress = new Uri("https://localhost:44324/api/keeperdata/");
         }
 
-        // GET: Animal/List
+        // GET: Keeper/List
         public ActionResult List()
         {
-            //objective: communicate with our animal data api to retrieve a list of animals
-            //curl https://localhost:44324/api/animaldata/listanimals
+            //objective: communicate with our Keeper data api to retrieve a list of Keepers
+            //curl https://localhost:44324/api/Keeperdata/listkeepers
 
-           
-            string url = "listanimals";
+
+            string url = "listkeepers";
             HttpResponseMessage response = client.GetAsync(url).Result;
 
             //Debug.WriteLine("The response code is ");
             //Debug.WriteLine(response.StatusCode);
 
-            IEnumerable<AnimalDto> animals = response.Content.ReadAsAsync<IEnumerable<AnimalDto>>().Result;
-            //Debug.WriteLine("Number of animals received : ");
-            //Debug.WriteLine(animals.Count());
+            IEnumerable<KeeperDto> Keepers = response.Content.ReadAsAsync<IEnumerable<KeeperDto>>().Result;
+            //Debug.WriteLine("Number of Keepers received : ");
+            //Debug.WriteLine(Keepers.Count());
 
 
-            return View(animals);
+            return View(Keepers);
         }
 
-        // GET: Animal/Details/5
+        // GET: Keeper/Details/5
         public ActionResult Details(int id)
         {
-            //objective: communicate with our animal data api to retrieve one animal
-            //curl https://localhost:44324/api/animaldata/findanimal/{id}
+            //objective: communicate with our Keeper data api to retrieve one Keeper
+            //curl https://localhost:44324/api/Keeperdata/findkeeper/{id}
 
-            string url = "findanimal/"+id;
+            string url = "findKeeper/" + id;
             HttpResponseMessage response = client.GetAsync(url).Result;
 
             Debug.WriteLine("The response code is ");
             Debug.WriteLine(response.StatusCode);
 
-            AnimalDto selectedanimal = response.Content.ReadAsAsync<AnimalDto>().Result;
-            Debug.WriteLine("animal received : ");
-            Debug.WriteLine(selectedanimal.AnimalName);
-            
+            KeeperDto selectedKeeper = response.Content.ReadAsAsync<KeeperDto>().Result;
+            Debug.WriteLine("Keeper received : ");
+            Debug.WriteLine(selectedKeeper.KeeperFirstName);
 
-            return View(selectedanimal);
+
+            return View(selectedKeeper);
         }
 
         public ActionResult Error()
@@ -69,24 +69,24 @@ namespace ZooApplication.Controllers
             return View();
         }
 
-        // GET: Animal/New
+        // GET: Keeper/New
         public ActionResult New()
         {
             return View();
         }
 
-        // POST: Animal/Create
+        // POST: Keeper/Create
         [HttpPost]
-        public ActionResult Create(Animal animal)
+        public ActionResult Create(Keeper Keeper)
         {
             Debug.WriteLine("the json payload is :");
-            //Debug.WriteLine(animal.AnimalName);
-            //objective: add a new animal into our system using the API
-            //curl -H "Content-Type:application/json" -d @animal.json https://localhost:44324/api/animaldata/addanimal 
-            string url = "addanimal";
+            //Debug.WriteLine(Keeper.KeeperName);
+            //objective: add a new Keeper into our system using the API
+            //curl -H "Content-Type:application/json" -d @Keeper.json https://localhost:44324/api/Keeperdata/addKeeper 
+            string url = "addkeeper";
 
-            
-            string jsonpayload = jss.Serialize(animal);
+
+            string jsonpayload = jss.Serialize(Keeper);
             Debug.WriteLine(jsonpayload);
 
             HttpContent content = new StringContent(jsonpayload);
@@ -102,25 +102,25 @@ namespace ZooApplication.Controllers
                 return RedirectToAction("Error");
             }
 
-            
+
         }
 
-        // GET: Animal/Edit/5
+        // GET: Keeper/Edit/5
         public ActionResult Edit(int id)
         {
-            string url = "findanimal/" + id;
+            string url = "findkeeper/" + id;
             HttpResponseMessage response = client.GetAsync(url).Result;
-            AnimalDto selectedanimal = response.Content.ReadAsAsync<AnimalDto>().Result;
-            return View(selectedanimal);
+            KeeperDto selectedKeeper = response.Content.ReadAsAsync<KeeperDto>().Result;
+            return View(selectedKeeper);
         }
 
-        // POST: Animal/Update/5
+        // POST: Keeper/Update/5
         [HttpPost]
-        public ActionResult Update(int id, Animal animal)
+        public ActionResult Update(int id, Keeper Keeper)
         {
-            
-            string url = "updateanimal/"+id;
-            string jsonpayload = jss.Serialize(animal);
+
+            string url = "updatekeeper/" + id;
+            string jsonpayload = jss.Serialize(Keeper);
             HttpContent content = new StringContent(jsonpayload);
             content.Headers.ContentType.MediaType = "application/json";
             HttpResponseMessage response = client.PostAsync(url, content).Result;
@@ -135,20 +135,20 @@ namespace ZooApplication.Controllers
             }
         }
 
-        // GET: Animal/Delete/5
+        // GET: Keeper/Delete/5
         public ActionResult DeleteConfirm(int id)
         {
-            string url = "findanimal/" + id;
+            string url = "findkeeper/" + id;
             HttpResponseMessage response = client.GetAsync(url).Result;
-            AnimalDto selectedanimal = response.Content.ReadAsAsync<AnimalDto>().Result;
-            return View(selectedanimal);
+            KeeperDto selectedKeeper = response.Content.ReadAsAsync<KeeperDto>().Result;
+            return View(selectedKeeper);
         }
 
-        // POST: Animal/Delete/5
+        // POST: Keeper/Delete/5
         [HttpPost]
         public ActionResult Delete(int id)
         {
-            string url = "deleteanimal/"+id;
+            string url = "deletekeeper/" + id;
             HttpContent content = new StringContent("");
             content.Headers.ContentType.MediaType = "application/json";
             HttpResponseMessage response = client.PostAsync(url, content).Result;
