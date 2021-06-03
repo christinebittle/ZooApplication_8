@@ -125,6 +125,7 @@ namespace ZooApplication.Controllers
         /// </example>
         [HttpPost]
         [Route("api/AnimalData/AssociateAnimalWithKeeper/{animalid}/{keeperid}")]
+        [Authorize]
         public IHttpActionResult AssociateAnimalWithKeeper(int animalid, int keeperid)
         {
             
@@ -163,6 +164,7 @@ namespace ZooApplication.Controllers
         /// </example>
         [HttpPost]
         [Route("api/AnimalData/UnAssociateAnimalWithKeeper/{animalid}/{keeperid}")]
+        [Authorize]
         public IHttpActionResult UnAssociateAnimalWithKeeper(int animalid, int keeperid)
         {
 
@@ -238,6 +240,7 @@ namespace ZooApplication.Controllers
         /// </example>
         [ResponseType(typeof(void))]
         [HttpPost]
+        [Authorize]
         public IHttpActionResult UpdateAnimal(int id, Animal animal)
         { 
             if (!ModelState.IsValid)
@@ -287,6 +290,7 @@ namespace ZooApplication.Controllers
         /// </example>
         [ResponseType(typeof(Animal))]
         [HttpPost]
+        [Authorize]
         public IHttpActionResult AddAnimal(Animal animal)
         {
             if (!ModelState.IsValid)
@@ -315,6 +319,7 @@ namespace ZooApplication.Controllers
         /// </example>
         [ResponseType(typeof(Animal))]
         [HttpPost]
+        [Authorize]
         public IHttpActionResult DeleteAnimal(int id)
         {
             Animal animal = db.Animals.Find(id);

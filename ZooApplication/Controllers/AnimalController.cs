@@ -20,7 +20,14 @@ namespace ZooApplication.Controllers
 
         static AnimalController()
         {
-            client = new HttpClient();
+            HttpClientHandler handler = new HttpClientHandler()
+            {
+                AllowAutoRedirect = false,
+                //cookies are manually set in RequestHeader
+                UseCookies = false
+            };
+
+            client = new HttpClient(handler);
             client.BaseAddress = new Uri("https://localhost:44324/api/");
         }
 
@@ -112,8 +119,10 @@ namespace ZooApplication.Controllers
 
         //POST: Animal/Associate/{animalid}
         [HttpPost]
+        [Authorize]
         public ActionResult Associate(int id, int KeeperID)
         {
+            GetApplicationCookie();//get token credentials
             Debug.WriteLine("Attempting to associate animal :"+id+ " with keeper "+KeeperID);
 
             //call our api to associate animal with keeper
@@ -128,8 +137,10 @@ namespace ZooApplication.Controllers
 
         //Get: Animal/UnAssociate/{id}?KeeperID={keeperID}
         [HttpGet]
+        [Authorize]
         public ActionResult UnAssociate(int id, int KeeperID)
         {
+            GetApplicationCookie();//get token credentials
             Debug.WriteLine("Attempting to unassociate animal :" + id + " with keeper: " + KeeperID);
 
             //call our api to associate animal with keeper
@@ -149,7 +160,7 @@ namespace ZooApplication.Controllers
         }
 
         // GET: Animal/New
-        
+        [Authorize]
         public ActionResult New()
         {
             //information about all species in the system.
@@ -164,9 +175,10 @@ namespace ZooApplication.Controllers
 
         // POST: Animal/Create
         [HttpPost]
-       
+        [Authorize]
         public ActionResult Create(Animal animal)
         {
+            GetApplicationCookie();//get token credentials
             Debug.WriteLine("the json payload is :");
             //Debug.WriteLine(animal.AnimalName);
             //objective: add a new animal into our system using the API
@@ -221,7 +233,7 @@ namespace ZooApplication.Controllers
         [Authorize]
         public ActionResult Update(int id, Animal animal)
         {
-            
+            GetApplicationCookie();//get token credentials   
             string url = "animaldata/updateanimal/"+id;
             string jsonpayload = jss.Serialize(animal);
             HttpContent content = new StringContent(jsonpayload);
@@ -253,6 +265,7 @@ namespace ZooApplication.Controllers
         [Authorize]
         public ActionResult Delete(int id)
         {
+            GetApplicationCookie();//get token credentials
             string url = "animaldata/deleteanimal/"+id;
             HttpContent content = new StringContent("");
             content.Headers.ContentType.MediaType = "application/json";
