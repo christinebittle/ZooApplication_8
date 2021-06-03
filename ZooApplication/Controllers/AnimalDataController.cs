@@ -46,6 +46,147 @@ namespace ZooApplication.Controllers
         }
 
         /// <summary>
+        /// Gathers information about all animals related to a particular species ID
+        /// </summary>
+        /// <returns>
+        /// HEADER: 200 (OK)
+        /// CONTENT: all animals in the database, including their associated species matched with a particular species ID
+        /// </returns>
+        /// <param name="id">Species ID.</param>
+        /// <example>
+        /// GET: api/AnimalData/ListAnimalsForSpecies/3
+        /// </example>
+        [HttpGet]
+        [ResponseType(typeof(AnimalDto))]
+        public IHttpActionResult ListAnimalsForSpecies(int id)
+        {
+            List<Animal> Animals = db.Animals.Where(a=>a.SpeciesID==id).ToList();
+            List<AnimalDto> AnimalDtos = new List<AnimalDto>();
+
+            Animals.ForEach(a => AnimalDtos.Add(new AnimalDto()
+            {
+                AnimalID = a.AnimalID,
+                AnimalName = a.AnimalName,
+                AnimalWeight = a.AnimalWeight,
+                SpeciesID = a.Species.SpeciesID,
+                SpeciesName = a.Species.SpeciesName
+            }));
+
+            return Ok(AnimalDtos);
+        }
+
+        /// <summary>
+        /// Gathers information about animals related to a particular keeper
+        /// </summary>
+        /// <returns>
+        /// HEADER: 200 (OK)
+        /// CONTENT: all animals in the database, including their associated species that match to a particular keeper id
+        /// </returns>
+        /// <param name="id">Keeper ID.</param>
+        /// <example>
+        /// GET: api/AnimalData/ListAnimalsForKeeper/1
+        /// </example>
+        [HttpGet]
+        [ResponseType(typeof(AnimalDto))]
+        public IHttpActionResult ListAnimalsForKeeper(int id)
+        {
+            //all animals that have keepers which match with our ID
+            List<Animal> Animals = db.Animals.Where(
+                a=>a.Keepers.Any(
+                    k=>k.KeeperID==id
+                )).ToList();
+            List<AnimalDto> AnimalDtos = new List<AnimalDto>();
+
+            Animals.ForEach(a => AnimalDtos.Add(new AnimalDto()
+            {
+                AnimalID = a.AnimalID,
+                AnimalName = a.AnimalName,
+                AnimalWeight = a.AnimalWeight,
+                SpeciesID = a.Species.SpeciesID,
+                SpeciesName = a.Species.SpeciesName
+            }));
+
+            return Ok(AnimalDtos);
+        }
+
+
+        /// <summary>
+        /// Associates a particular keeper with a particular animal
+        /// </summary>
+        /// <param name="animalid">The animal ID primary key</param>
+        /// <param name="keeperid">The keeper ID primary key</param>
+        /// <returns>
+        /// HEADER: 200 (OK)
+        /// or
+        /// HEADER: 404 (NOT FOUND)
+        /// </returns>
+        /// <example>
+        /// POST api/AnimalData/AssociateAnimalWithKeeper/9/1
+        /// </example>
+        [HttpPost]
+        [Route("api/AnimalData/AssociateAnimalWithKeeper/{animalid}/{keeperid}")]
+        public IHttpActionResult AssociateAnimalWithKeeper(int animalid, int keeperid)
+        {
+            
+            Animal SelectedAnimal = db.Animals.Include(a=>a.Keepers).Where(a=>a.AnimalID==animalid).FirstOrDefault();
+            Keeper SelectedKeeper = db.Keepers.Find(keeperid);
+
+            if(SelectedAnimal==null || SelectedKeeper == null)
+            {
+                return NotFound();
+            }
+
+            Debug.WriteLine("input animal id is: " + animalid);
+            Debug.WriteLine("selected animal name is: "+ SelectedAnimal.AnimalName);
+            Debug.WriteLine("input keeper id is: " + keeperid);
+            Debug.WriteLine("selected keeper name is: " + SelectedKeeper.KeeperFirstName);
+
+
+            SelectedAnimal.Keepers.Add(SelectedKeeper);
+            db.SaveChanges();
+
+            return Ok();
+        }
+
+        /// <summary>
+        /// Removes an association between a particular keeper and a particular animal
+        /// </summary>
+        /// <param name="animalid">The animal ID primary key</param>
+        /// <param name="keeperid">The keeper ID primary key</param>
+        /// <returns>
+        /// HEADER: 200 (OK)
+        /// or
+        /// HEADER: 404 (NOT FOUND)
+        /// </returns>
+        /// <example>
+        /// POST api/AnimalData/AssociateAnimalWithKeeper/9/1
+        /// </example>
+        [HttpPost]
+        [Route("api/AnimalData/UnAssociateAnimalWithKeeper/{animalid}/{keeperid}")]
+        public IHttpActionResult UnAssociateAnimalWithKeeper(int animalid, int keeperid)
+        {
+
+            Animal SelectedAnimal = db.Animals.Include(a => a.Keepers).Where(a => a.AnimalID == animalid).FirstOrDefault();
+            Keeper SelectedKeeper = db.Keepers.Find(keeperid);
+
+            if (SelectedAnimal == null || SelectedKeeper == null)
+            {
+                return NotFound();
+            }
+
+            Debug.WriteLine("input animal id is: " + animalid);
+            Debug.WriteLine("selected animal name is: " + SelectedAnimal.AnimalName);
+            Debug.WriteLine("input keeper id is: " + keeperid);
+            Debug.WriteLine("selected keeper name is: " + SelectedKeeper.KeeperFirstName);
+
+
+            SelectedAnimal.Keepers.Remove(SelectedKeeper);
+            db.SaveChanges();
+
+            return Ok();
+        }
+
+        /// <summary>
         /// Returns all animals in the system.
         /// </summary>
         /// <returns>

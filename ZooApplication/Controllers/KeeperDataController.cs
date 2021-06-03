@@ -45,6 +45,69 @@ namespace ZooApplication.Controllers
         }
 
         /// <summary>
+        /// Returns all Keepers in the system associated with a particular animal.
+        /// </summary>
+        /// <returns>
+        /// HEADER: 200 (OK)
+        /// CONTENT: all Keepers in the database taking care of a particular animal
+        /// </returns>
+        /// <param name="id">Animal Primary Key</param>
+        /// <example>
+        /// GET: api/KeeperData/ListKeepersForAnimal/1
+        /// </example>
+        [HttpGet]
+        [ResponseType(typeof(KeeperDto))]
+        public IHttpActionResult ListKeepersForAnimal(int id)
+        {
+            List<Keeper> Keepers = db.Keepers.Where(
+                k=>k.Animals.Any(
+                    a=>a.AnimalID==id)
+                ).ToList();
+            List<KeeperDto> KeeperDtos = new List<KeeperDto>();
+
+            Keepers.ForEach(k => KeeperDtos.Add(new KeeperDto()
+            {
+                KeeperID = k.KeeperID,
+                KeeperFirstName = k.KeeperFirstName,
+                KeeperLastName = k.KeeperLastName
+            }));
+
+            return Ok(KeeperDtos);
+        }
+
+
+        /// <summary>
+        /// Returns Keepers in the system not caring for a particular animal.
+        /// </summary>
+        /// <returns>
+        /// HEADER: 200 (OK)
+        /// CONTENT: all Keepers in the database not taking care of a particular animal
+        /// </returns>
+        /// <param name="id">Animal Primary Key</param>
+        /// <example>
+        /// GET: api/KeeperData/ListKeepersNotCaringForAnimal/1
+        /// </example>
+        [HttpGet]
+        [ResponseType(typeof(KeeperDto))]
+        public IHttpActionResult ListKeepersNotCaringForAnimal(int id)
+        {
+            List<Keeper> Keepers = db.Keepers.Where(
+                k => !k.Animals.Any(
+                    a => a.AnimalID == id)
+                ).ToList();
+            List<KeeperDto> KeeperDtos = new List<KeeperDto>();
+
+            Keepers.ForEach(k => KeeperDtos.Add(new KeeperDto()
+            {
+                KeeperID = k.KeeperID,
+                KeeperFirstName = k.KeeperFirstName,
+                KeeperLastName = k.KeeperLastName
+            }));
+
+            return Ok(KeeperDtos);
+        }
+
+        /// <summary>
         /// Returns all Keepers in the system.
         /// </summary>
         /// <returns>

@@ -1,4 +1,4 @@
-﻿@model ZooApplication.Models.SpeciesDto 
+﻿@model ZooApplication.Models.ViewModels.DetailsSpecies
 
 
 @{
@@ -7,9 +7,18 @@
 
 <a href="/Species/List">Go back to list</a>
 <br />
-<a href="/Species/Edit/@Model.SpeciesID">Update</a>
+<a href="/Species/Edit/@Model.SelectedSpecies.SpeciesID">Update</a>
 <br />
-<a style="color:#ab2020;" href="/Species/DeleteConfirm/@Model.SpeciesID">Delete</a>
-<h2>@Model.SpeciesName</h2>
-<div>Endangered: @Model.SpeciesEndangered</div>
+<a style="color:#ab2020;" href="/Species/DeleteConfirm/@Model.SelectedSpecies.SpeciesID">Delete</a>
+<h2>@Model.SelectedSpecies.SpeciesName</h2>
+<div>Endangered: @Model.SelectedSpecies.SpeciesEndangered</div>
 
+
+<div style="margin-top:100px;">
+    <h3>Animals related to this species</h3>
+    @foreach(var animal in Model.RelatedAnimals)
+    {
+        <a href="/Animal/Details/@animal.AnimalID">@animal.AnimalName</a>
+
+    }
+</div>

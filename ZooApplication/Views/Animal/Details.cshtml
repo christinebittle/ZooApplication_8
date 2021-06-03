@@ -1,16 +1,36 @@
-﻿@model ZooApplication.Models.AnimalDto 
-
-
+﻿@model ZooApplication.Models.ViewModels.DetailsAnimal
 @{
     ViewBag.Title = "View";
 }
 
 <a href="/Animal/List">Go back to list</a>
 <br />
-<a href="/Animal/Edit/@Model.AnimalID">Update</a>
+<a href="/Animal/Edit/@Model.SelectedAnimal.AnimalID">Update</a>
 <br />
-<a style="color:#ab2020;" href="/Animal/DeleteConfirm/@Model.AnimalID">Delete</a>
-<h2>@Model.AnimalName</h2>
-<div>weight: @Model.AnimalWeight kg</div>
-<div>species: @Model.SpeciesName</div>
+<a style="color:#ab2020;" href="/Animal/DeleteConfirm/@Model.SelectedAnimal.AnimalID">Delete</a>
+<h2>@Model.SelectedAnimal.AnimalName</h2>
+<div>weight: @Model.SelectedAnimal.AnimalWeight kg</div>
+<div>species: @Model.SelectedAnimal.SpeciesName</div>
+
+<div>
+    <h2>Keepers Responsible for @Model.SelectedAnimal.AnimalName:</h2>
+    @foreach(var keeper in Model.ResponsibleKeepers){
+    
+        <a href="/Keeper/Details/@keeper.KeeperID">@keeper.KeeperFirstName @keeper.KeeperLastName</a> <a style="color:#ab2020;" href="/Animal/Unassociate/@Model.SelectedAnimal.AnimalID?KeeperID=@keeper.KeeperID">[x]</a><br />
+    }
+
+    <div>
+        <h4>Add new Keeper to take care of @Model.SelectedAnimal.AnimalName</h4>
+        <form method="POST" action="/Animal/Associate/@Model.SelectedAnimal.AnimalID">
+            <select name="KeeperID">
+                @foreach (var keeper in Model.AvailableKeepers)
+                {
+                    <option value="@keeper.KeeperID">@keeper.KeeperFirstName @keeper.KeeperLastName</option>
+                }
+
+            </select>
+            <input type="submit" value="Associate Keeper" />
+        </form>
+    </div>
+</div>
 

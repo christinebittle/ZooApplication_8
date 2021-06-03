@@ -13,7 +13,7 @@ using System.Diagnostics;
 
 namespace ZooApplication.Controllers
 {
-    public class SpeciesData : ApiController
+    public class SpeciesDataController : ApiController
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
@@ -25,16 +25,16 @@ namespace ZooApplication.Controllers
         /// CONTENT: all Speciess in the database, including their associated species.
         /// </returns>
         /// <example>
-        /// GET: api/SpeciesData/ListSpeciess
+        /// GET: api/SpeciesData/ListSpecies
         /// </example>
         [HttpGet]
         [ResponseType(typeof(SpeciesDto))]
         public IHttpActionResult ListSpecies()
         {
-            List<Species> Speciess = db.Species.ToList();
+            List<Species> Species = db.Species.ToList();
             List<SpeciesDto> SpeciesDtos = new List<SpeciesDto>();
 
-            Speciess.ForEach(s => SpeciesDtos.Add(new SpeciesDto()
+            Species.ForEach(s => SpeciesDtos.Add(new SpeciesDto()
             {
                 SpeciesID = s.SpeciesID,
                 SpeciesName = s.SpeciesName,

@@ -1,23 +1,31 @@
-﻿@model ZooApplication.Models.AnimalDto
+﻿@model ZooApplication.Models.ViewModels.UpdateAnimal
 
 @{
     ViewBag.Title = "Edit";
 }
 
 <h2>Update Animal</h2>
-<form action="/Animal/Update/@Model.AnimalID" method="POST">
+<form action="/Animal/Update/@Model.SelectedAnimal.AnimalID" method="POST">
     <div style="display:none;">
         @* Pass through the animal ID *@
-        <input type="text" name="AnimalID" value="@Model.AnimalID" />
+        <input type="text" name="AnimalID" value="@Model.SelectedAnimal.AnimalID" />
     </div>
     <div>
-        <label>Name:</label> <input type="text" name="AnimalName" value="@Model.AnimalName" />
+        <label>Name:</label> <input type="text" name="AnimalName" value="@Model.SelectedAnimal.AnimalName" />
     </div>
     <div>
-        <label>Weight (kg):</label> <input type="number" name="AnimalWeight" value="@Model.AnimalWeight" />
+        <label>Weight (kg):</label> <input type="number" name="AnimalWeight" value="@Model.SelectedAnimal.AnimalWeight" />
     </div>
     <div>
-        <label>Species ID:</label> <input type="number" name="SpeciesID" value="@Model.SpeciesID" />
+        <label>Species ID:</label>
+
+        <select name="SpeciesID">
+            @foreach (var species in Model.SpeciesOptions)
+            {
+                <option value="@species.SpeciesID">@species.SpeciesName</option>
+
+            }
+        </select>
     </div>
     <div>
         <input type="submit" value="Update Animal" />
