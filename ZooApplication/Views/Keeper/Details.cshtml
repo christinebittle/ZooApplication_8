@@ -1,4 +1,4 @@
-﻿@model ZooApplication.Models.KeeperDto 
+﻿@model ZooApplication.Models.ViewModels.DetailsKeeper
 
 
 @{
@@ -7,8 +7,18 @@
 
 <a href="/Keeper/List">Go back to list</a>
 <br />
-<a href="/Keeper/Edit/@Model.KeeperID">Update</a>
+<a href="/Keeper/Edit/@Model.SelectedKeeper.KeeperID">Update</a>
 <br />
-<a style="color:#ab2020;" href="/Keeper/DeleteConfirm/@Model.KeeperID">Delete</a>
-<h2>@Model.KeeperFirstName @Model.KeeperLastName</h2>
+<a style="color:#ab2020;" href="/Keeper/DeleteConfirm/@Model.SelectedKeeper.KeeperID">Delete</a>
+<h2>@Model.SelectedKeeper.KeeperFirstName @Model.SelectedKeeper.KeeperLastName</h2>
 
+
+
+<div>
+    <h3>Responsible for:</h3>
+    @foreach(var animal in Model.KeptAnimals)
+    {
+        <a href="/Animal/Details/@animal.AnimalID">@animal.AnimalName</a><br />
+
+    }
+</div>
