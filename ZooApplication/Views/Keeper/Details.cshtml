@@ -4,21 +4,27 @@
 @{
     ViewBag.Title = "View";
 }
-
-<a href="/Keeper/List">Go back to list</a>
-<br />
-<a href="/Keeper/Edit/@Model.SelectedKeeper.KeeperID">Update</a>
-<br />
-<a style="color:#ab2020;" href="/Keeper/DeleteConfirm/@Model.SelectedKeeper.KeeperID">Delete</a>
 <h2>@Model.SelectedKeeper.KeeperFirstName @Model.SelectedKeeper.KeeperLastName</h2>
+<nav>
+    <ul>
+        <li><a href="/Keeper/List">Go back to list</a></li>
+        <li><a href="/Keeper/Edit/@Model.SelectedKeeper.KeeperID">Update</a></li>
+        <li><a style="color:#ab2020;" href="/Keeper/DeleteConfirm/@Model.SelectedKeeper.KeeperID">Delete</a></li>
+    </ul>
+</nav>
+<div class="row">
+    <div class="col-md-6 col-sm-12">
+       <div>First Name: @Model.SelectedKeeper.KeeperFirstName</div>
+       <div>Last Name: @Model.SelectedKeeper.KeeperLastName</div>
+    </div>
 
 
+    <div class="col-md-6 col-sm-12">
+        <h4>Responsible for:</h4>
+        @foreach (var animal in Model.KeptAnimals)
+        {
+            <a href="/Animal/Details/@animal.AnimalID">@animal.AnimalName</a><br />
 
-<div>
-    <h3>Responsible for:</h3>
-    @foreach(var animal in Model.KeptAnimals)
-    {
-        <a href="/Animal/Details/@animal.AnimalID">@animal.AnimalName</a><br />
-
-    }
+        }
+    </div>
 </div>

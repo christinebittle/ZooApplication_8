@@ -5,30 +5,45 @@
 }
 
 <h2>Update Animal</h2>
-<form action="/Animal/Update/@Model.SelectedAnimal.AnimalID" method="POST">
-    <div style="display:none;">
-        @* Pass through the animal ID *@
-        <input type="text" name="AnimalID" value="@Model.SelectedAnimal.AnimalID" />
-    </div>
-    <div>
-        <label>Name:</label> <input type="text" name="AnimalName" value="@Model.SelectedAnimal.AnimalName" />
-    </div>
-    <div>
-        <label>Weight (kg):</label> <input type="number" name="AnimalWeight" value="@Model.SelectedAnimal.AnimalWeight" />
-    </div>
-    <div>
-        <label>Species ID:</label>
+<nav>
+    <ul>
+        <li><a href="/Animal/List">Go back to list</a></li>
+        
+        <li><a style="color:#ab2020;" href="/Animal/DeleteConfirm/@Model.SelectedAnimal.AnimalID">Delete</a></li>
+    </ul>
+</nav>
+<form action="/Animal/Update/@Model.SelectedAnimal.AnimalID" method="POST" enctype = "multipart/form-data">
+    <div class="row">
+        <div class="col-md-6 col-sm-12">
+            <div style="display:none;">
+                @* Pass through the animal ID *@
+                <input type="text" name="AnimalID" value="@Model.SelectedAnimal.AnimalID" />
+            </div>
+            <div>
+                <label>Name:</label> <input type="text" name="AnimalName" value="@Model.SelectedAnimal.AnimalName" />
+            </div>
+            <div>
+                <label>Weight (kg):</label> <input type="number" name="AnimalWeight" value="@Model.SelectedAnimal.AnimalWeight" />
+            </div>
+            <div>
+                <label>Species ID:</label>
 
-        <select name="SpeciesID">
-            @foreach (var species in Model.SpeciesOptions)
-            {
-                <option value="@species.SpeciesID">@species.SpeciesName</option>
+                <select name="SpeciesID">
+                    @foreach (var species in Model.SpeciesOptions)
+                    {
+                        <option value="@species.SpeciesID">@species.SpeciesName</option>
 
-            }
-        </select>
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+            <input type="file" name="AnimalPic" />
+        </div>
     </div>
     <div>
         <input type="submit" value="Update Animal" />
 
     </div>
+
 </form>

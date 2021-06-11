@@ -5,11 +5,15 @@
 }
 
 <h2>Are you sure you want to delete this animal?</h2>
-<a href="/Animal/List">Cancel</a>
-<h2>@Model.AnimalName</h2>
-<div>weight: @Model.AnimalWeight kg</div>
-<div>species: @Model.SpeciesName</div>
+<nav>
+    <ul>
+        <li><a href="/Animal/List">Cancel</a></li>
+        <li><a href="/Animal/Edit/@Model.AnimalID">Update</a></li>
+    </ul>
+</nav>
+<h3>@Model.AnimalName</h3>
+<div>Weight: @Model.AnimalWeight kg</div>
+<div>Species: @Model.SpeciesName</div>
 <form action="/Animal/Delete/@Model.AnimalID" method="POST">
     <input type="submit" value="Confirm Delete"/>
-
 </form>

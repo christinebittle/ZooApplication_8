@@ -16,6 +16,10 @@ namespace ZooApplication.Models
         //weight is in kg
         public int AnimalWeight { get; set; }
         
+        //data needed for keeping track of animals images uploaded
+        //images deposited into /Content/Images/Animals/{id}.{extension}
+        public bool AnimalHasPic { get; set; }
+        public string PicExtension { get; set; }
 
         //An animal belongs to one species
         //A species can have many animals
@@ -40,7 +44,11 @@ namespace ZooApplication.Models
         public int SpeciesID { get; set; }
         public string SpeciesName { get; set; }
 
-        
+        //data needed for keeping track of animals images uploaded
+        //images deposited into /Content/Images/Animals/{id}.{extension}
+        public bool AnimalHasPic { get; set; }
+        public string PicExtension { get; set; }
+
 
     }
 

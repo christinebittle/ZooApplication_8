@@ -22,3 +22,8 @@ select,
 textarea {
     max-width: 280px;
 }
+
+
+.nav > li > a { padding-left: 6px; padding-right:6px;}
+nav ul {padding-left:0px;}
+nav ul li{list-style-type:none; display:inline-block; margin-right:15px;}

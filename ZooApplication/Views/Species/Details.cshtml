@@ -4,21 +4,30 @@
 @{
     ViewBag.Title = "View";
 }
+<h2>Species @Model.SelectedSpecies.SpeciesName</h2>
+<nav>
+    <ul>
+        <li><a href="/Species/List">Go back to list</a></li>
+        <li><a href="/Species/Edit/@Model.SelectedSpecies.SpeciesID">Update</a></li>
+        <li>
+            <a style="color:#ab2020;" href="/Species/DeleteConfirm/@Model.SelectedSpecies.SpeciesID">Delete</a>
+        </li>
+    </ul>
+</nav>
 
-<a href="/Species/List">Go back to list</a>
-<br />
-<a href="/Species/Edit/@Model.SelectedSpecies.SpeciesID">Update</a>
-<br />
-<a style="color:#ab2020;" href="/Species/DeleteConfirm/@Model.SelectedSpecies.SpeciesID">Delete</a>
-<h2>@Model.SelectedSpecies.SpeciesName</h2>
-<div>Endangered: @Model.SelectedSpecies.SpeciesEndangered</div>
 
 
-<div style="margin-top:100px;">
-    <h3>Animals related to this species</h3>
-    @foreach(var animal in Model.RelatedAnimals)
-    {
-        <a href="/Animal/Details/@animal.AnimalID">@animal.AnimalName</a>
+<div class="row">
+    <div class="col-md-6 col-sm-12">
+        
+        <div>Endangered: @Model.SelectedSpecies.SpeciesEndangered</div>
+    </div>
+    <div class="col-md-6 col-sm-12">
+        <h3>Our @(Model.SelectedSpecies.SpeciesName)s</h3>
+        @foreach (var animal in Model.RelatedAnimals)
+        {
+            <a href="/Animal/Details/@animal.AnimalID">@animal.AnimalName</a>
 
-    }
+        }
+    </div>
 </div>

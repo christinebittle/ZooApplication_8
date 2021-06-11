@@ -2,35 +2,49 @@
 @{
     ViewBag.Title = "View";
 }
-
-<a href="/Animal/List">Go back to list</a>
-<br />
-<a href="/Animal/Edit/@Model.SelectedAnimal.AnimalID">Update</a>
-<br />
-<a style="color:#ab2020;" href="/Animal/DeleteConfirm/@Model.SelectedAnimal.AnimalID">Delete</a>
 <h2>@Model.SelectedAnimal.AnimalName</h2>
-<div>weight: @Model.SelectedAnimal.AnimalWeight kg</div>
-<div>species: @Model.SelectedAnimal.SpeciesName</div>
-
-<div>
-    <h2>Keepers Responsible for @Model.SelectedAnimal.AnimalName:</h2>
-    @foreach(var keeper in Model.ResponsibleKeepers){
-    
-        <a href="/Keeper/Details/@keeper.KeeperID">@keeper.KeeperFirstName @keeper.KeeperLastName</a> <a style="color:#ab2020;" href="/Animal/Unassociate/@Model.SelectedAnimal.AnimalID?KeeperID=@keeper.KeeperID">[x]</a><br />
-    }
-
-    <div>
-        <h4>Add new Keeper to take care of @Model.SelectedAnimal.AnimalName</h4>
-        <form method="POST" action="/Animal/Associate/@Model.SelectedAnimal.AnimalID">
-            <select name="KeeperID">
-                @foreach (var keeper in Model.AvailableKeepers)
-                {
-                    <option value="@keeper.KeeperID">@keeper.KeeperFirstName @keeper.KeeperLastName</option>
-                }
-
-            </select>
-            <input type="submit" value="Associate Keeper" />
-        </form>
+<nav>
+    <ul>
+        <li><a href="/Animal/List">Go back to list</a></li>
+        <li><a href="/Animal/Edit/@Model.SelectedAnimal.AnimalID">Update</a></li>
+        <li><a style="color:#ab2020;" href="/Animal/DeleteConfirm/@Model.SelectedAnimal.AnimalID">Delete</a></li>
+    </ul>
+</nav>
+<div class="row">
+    <div class="col-md-6 col-sm-12">
+        @{ 
+            string imageurl = "/Content/Images/Animals/default.jpg";
+            if (Model.SelectedAnimal.AnimalHasPic)
+            {
+                imageurl = "/Content/Images/Animals/" + Model.SelectedAnimal.AnimalID +"."+ Model.SelectedAnimal.PicExtension;
+            }
+        }
+        <div><img src="@imageurl"/></div>
+        <div>Weight: @Model.SelectedAnimal.AnimalWeight kg</div>
+        <div>Species: @Model.SelectedAnimal.SpeciesName</div>
     </div>
-</div>
+    <div class="col-md-6 col-sm-12">
+        <h4>Keepers Responsible for @Model.SelectedAnimal.AnimalName:</h4>
+        @foreach (var keeper in Model.ResponsibleKeepers)
+        {
 
+            <a href="/Keeper/Details/@keeper.KeeperID">@keeper.KeeperFirstName @keeper.KeeperLastName</a> <a style="color:#ab2020;" href="/Animal/Unassociate/@Model.SelectedAnimal.AnimalID?KeeperID=@keeper.KeeperID">[x]</a><br />
+        }
+
+        <div>
+            
+            <form method="POST" action="/Animal/Associate/@Model.SelectedAnimal.AnimalID">
+                <select name="KeeperID">
+                    <option value="">Select Keeper</option>
+                    @foreach (var keeper in Model.AvailableKeepers)
+                    {
+                        <option value="@keeper.KeeperID">@keeper.KeeperFirstName @keeper.KeeperLastName</option>
+                    }
+
+                </select>
+                <input type="submit" value="Add Keeper" />
+            </form>
+        </div>
+    </div>
+
+</div>

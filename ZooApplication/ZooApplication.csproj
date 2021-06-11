@@ -216,6 +216,10 @@
     <Compile Include="Migrations\202105070424072_keepers-animals.Designer.cs">
       <DependentUpon>202105070424072_keepers-animals.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202106112252483_animalpic.cs" />
+    <Compile Include="Migrations\202106112252483_animalpic.Designer.cs">
+      <DependentUpon>202106112252483_animalpic.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Animal.cs" />
@@ -308,6 +312,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\Images\Animals\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -340,6 +345,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202105070424072_keepers-animals.resx">
       <DependentUpon>202105070424072_keepers-animals.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202106112252483_animalpic.resx">
+      <DependentUpon>202106112252483_animalpic.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

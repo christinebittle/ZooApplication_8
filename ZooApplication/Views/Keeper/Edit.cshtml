@@ -5,6 +5,13 @@
 }
 
 <h2>Update Keeper</h2>
+<nav>
+    <ul>
+        <li><a href="/Keeper/List">Go back to list</a></li>
+      
+        <li><a style="color:#ab2020;" href="/Keeper/DeleteConfirm/@Model.KeeperID">Delete</a></li>
+    </ul>
+</nav>
 <form action="/Keeper/Update/@Model.KeeperID" method="POST">
     <div style="display:none;">
         @* Pass through the Keeper ID *@

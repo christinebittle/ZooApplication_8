@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using System.Web;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -38,6 +40,8 @@ namespace ZooApplication.Controllers
                 AnimalID = a.AnimalID,
                 AnimalName = a.AnimalName,
                 AnimalWeight = a.AnimalWeight,
+                AnimalHasPic = a.AnimalHasPic,
+                PicExtension = a.PicExtension,
                 SpeciesID = a.Species.SpeciesID,
                 SpeciesName = a.Species.SpeciesName
             }));
@@ -211,6 +215,8 @@ namespace ZooApplication.Controllers
                 AnimalID = Animal.AnimalID,
                 AnimalName = Animal.AnimalName,
                 AnimalWeight = Animal.AnimalWeight,
+                AnimalHasPic = Animal.AnimalHasPic,
+                PicExtension= Animal.PicExtension,
                 SpeciesID = Animal.Species.SpeciesID,
                 SpeciesName = Animal.Species.SpeciesName
             };
@@ -255,6 +261,9 @@ namespace ZooApplication.Controllers
             }
 
             db.Entry(animal).State = EntityState.Modified;
+            // Picture update is handled by another method
+            db.Entry(animal).Property(a => a.AnimalHasPic).IsModified = false;
+            db.Entry(animal).Property(a => a.PicExtension).IsModified = false;
 
             try
             {
@@ -272,6 +281,83 @@ namespace ZooApplication.Controllers
                 }
             }
             return StatusCode(HttpStatusCode.NoContent);
+        }
+
+        /// <summary>
+        /// Receives animal picture data, uploads it to the webserver and updates the animal's HasPic option
+        /// </summary>
+        /// <param name="id">the animal id</param>
+        /// <returns>status code 200 if successful.</returns>
+        /// <example>
+        /// curl -F animalpic=@file.jpg "https://localhost:xx/api/animaldata/updateanimalpic/2"
+        /// POST: api/animalData/UpdateanimalPic/3
+        /// HEADER: enctype=multipart/form-data
+        /// FORM-DATA: image
+        /// </example>
+        /// https://stackoverflow.com/questions/28369529/how-to-set-up-a-web-api-controller-for-multipart-form-data
+
+        [HttpPost]
+        public IHttpActionResult UpdateAnimalPic(int id)
+        {
+
+            bool haspic = false;
+            string picextension;
+            if (Request.Content.IsMimeMultipartContent())
+            {
+                Debug.WriteLine("Received multipart form data.");
+
+                int numfiles = HttpContext.Current.Request.Files.Count;
+                Debug.WriteLine("Files Received: " + numfiles);
+
+                //Check if a file is posted
+                if (numfiles == 1 && HttpContext.Current.Request.Files[0] != null)
+                {
+                    var animalPic = HttpContext.Current.Request.Files[0];
+                    //Check if the file is empty
+                    if (animalPic.ContentLength > 0)
+                    {
+                        //establish valid file types (can be changed to other file extensions if desired!)
+                        var valtypes = new[] { "jpeg", "jpg", "png", "gif" };
+                        var extension = Path.GetExtension(animalPic.FileName).Substring(1);
+                        //Check the extension of the file
+                        if (valtypes.Contains(extension))
+                        {
+                            try
+                            {
+                                //file name is the id of the image
+                                string fn = id + "." + extension;
+
+                                //get a direct file path to ~/Content/animals/{id}.{extension}
+                                string path = Path.Combine(HttpContext.Current.Server.MapPath("~/Content/Images/Animals/"), fn);
+
+                                //save the file
+                                animalPic.SaveAs(path);
+
+                                //if these are all successful then we can set these fields
+                                haspic = true;
+                                picextension = extension;
+
+                                //Update the animal haspic and picextension fields in the database
+                                Animal Selectedanimal = db.Animals.Find(id);
+                                Selectedanimal.AnimalHasPic = haspic;
+                                Selectedanimal.PicExtension = extension;
+                                db.Entry(Selectedanimal).State = EntityState.Modified;
+
+                                db.SaveChanges();
+
+                            }
+                            catch (Exception ex)
+                            {
+                                Debug.WriteLine("animal Image was not saved successfully.");
+                                Debug.WriteLine("Exception:" + ex);
+                            }
+                        }
+                    }
+
+                }
+            }
+
+            return Ok();
         }
 
         /// <summary>
@@ -326,6 +412,17 @@ namespace ZooApplication.Controllers
             if (animal == null)
             {
                 return NotFound();
+            }
+
+            if (animal.AnimalHasPic && animal.PicExtension != "")
+            {
+                //also delete image from path
+                string path = HttpContext.Current.Server.MapPath("~/Content/Players/" + id + "." + animal.PicExtension);
+                if (System.IO.File.Exists(path))
+                {
+                    Debug.WriteLine("File exists... preparing to delete!");
+                    System.IO.File.Delete(path);
+                }
             }
 
             db.Animals.Remove(animal);

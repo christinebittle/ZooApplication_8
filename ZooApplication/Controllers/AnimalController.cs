@@ -231,17 +231,35 @@ namespace ZooApplication.Controllers
         // POST: Animal/Update/5
         [HttpPost]
         [Authorize]
-        public ActionResult Update(int id, Animal animal)
+        public ActionResult Update(int id, Animal animal, HttpPostedFileBase AnimalPic)
         {
             GetApplicationCookie();//get token credentials   
-            string url = "animaldata/updateanimal/"+id;
+            string url = "animaldata/updateanimal/" + id;
             string jsonpayload = jss.Serialize(animal);
             HttpContent content = new StringContent(jsonpayload);
             content.Headers.ContentType.MediaType = "application/json";
             HttpResponseMessage response = client.PostAsync(url, content).Result;
             Debug.WriteLine(content);
-            if (response.IsSuccessStatusCode)
+
+            //update request is successful, and we have image data
+            if (response.IsSuccessStatusCode && AnimalPic != null)
             {
+                //Updating the animal picture as a separate request
+                Debug.WriteLine("Calling Update Image method.");
+                //Send over image data for player
+                url = "AnimalData/UpdateAnimalPic/" + id;
+                //Debug.WriteLine("Received player picture "+PlayerPic.FileName);
+
+                MultipartFormDataContent requestcontent = new MultipartFormDataContent();
+                HttpContent imagecontent = new StreamContent(AnimalPic.InputStream);
+                requestcontent.Add(imagecontent, "AnimalPic", AnimalPic.FileName);
+                response = client.PostAsync(url, requestcontent).Result;
+
+                return RedirectToAction("List");
+            }
+            else if (response.IsSuccessStatusCode)
+            {
+                //No image upload, but update still successful
                 return RedirectToAction("List");
             }
             else
