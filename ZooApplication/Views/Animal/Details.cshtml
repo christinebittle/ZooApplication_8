@@ -19,7 +19,7 @@
                 imageurl = "/Content/Images/Animals/" + Model.SelectedAnimal.AnimalID +"."+ Model.SelectedAnimal.PicExtension;
             }
         }
-        <div><img src="@imageurl"/></div>
+        <div><img style="display:block; max-width:100%;" alt="@Model.SelectedAnimal.AnimalName" src="@imageurl"/></div>
         <div>Weight: @Model.SelectedAnimal.AnimalWeight kg</div>
         <div>Species: @Model.SelectedAnimal.SpeciesName</div>
     </div>
