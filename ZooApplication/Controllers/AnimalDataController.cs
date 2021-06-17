@@ -289,7 +289,7 @@ namespace ZooApplication.Controllers
         /// <param name="id">the animal id</param>
         /// <returns>status code 200 if successful.</returns>
         /// <example>
-        /// curl -F animalpic=@file.jpg "https://localhost:xx/api/animaldata/updateanimalpic/2"
+        /// curl -F animalpic=@file.jpg "https://localhost:xx/api/animaldata/uploadanimalpic/2"
         /// POST: api/animalData/UpdateanimalPic/3
         /// HEADER: enctype=multipart/form-data
         /// FORM-DATA: image
@@ -297,7 +297,7 @@ namespace ZooApplication.Controllers
         /// https://stackoverflow.com/questions/28369529/how-to-set-up-a-web-api-controller-for-multipart-form-data
 
         [HttpPost]
-        public IHttpActionResult UpdateAnimalPic(int id)
+        public IHttpActionResult UploadAnimalPic(int id)
         {
 
             bool haspic = false;
@@ -350,14 +350,22 @@ namespace ZooApplication.Controllers
                             {
                                 Debug.WriteLine("animal Image was not saved successfully.");
                                 Debug.WriteLine("Exception:" + ex);
+                                return BadRequest();
                             }
                         }
                     }
 
                 }
+
+                return Ok();
+            }
+            else
+            {
+                //not multipart form data
+                return BadRequest();
+
             }
 
-            return Ok();
         }
 
         /// <summary>

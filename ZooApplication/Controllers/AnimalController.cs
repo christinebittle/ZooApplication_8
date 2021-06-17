@@ -247,8 +247,8 @@ namespace ZooApplication.Controllers
                 //Updating the animal picture as a separate request
                 Debug.WriteLine("Calling Update Image method.");
                 //Send over image data for player
-                url = "AnimalData/UpdateAnimalPic/" + id;
-                //Debug.WriteLine("Received player picture "+PlayerPic.FileName);
+                url = "AnimalData/UploadAnimalPic/" + id;
+                //Debug.WriteLine("Received Animal Picture "+AnimalPic.FileName);
 
                 MultipartFormDataContent requestcontent = new MultipartFormDataContent();
                 HttpContent imagecontent = new StreamContent(AnimalPic.InputStream);

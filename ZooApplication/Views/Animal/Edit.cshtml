@@ -31,7 +31,12 @@
                 <select name="SpeciesID">
                     @foreach (var species in Model.SpeciesOptions)
                     {
-                        <option value="@species.SpeciesID">@species.SpeciesName</option>
+                        var selected = "";
+                        if (species.SpeciesID == Model.SelectedAnimal.SpeciesID)
+                        {
+                            selected = "selected";
+                        }
+                        <option value="@species.SpeciesID" @selected>@species.SpeciesName</option>
 
                     }
                 </select>

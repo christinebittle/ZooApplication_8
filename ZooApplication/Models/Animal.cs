@@ -16,7 +16,7 @@ namespace ZooApplication.Models
         //weight is in kg
         public int AnimalWeight { get; set; }
         
-        //data needed for keeping track of animals images uploaded
+        //data needed for keeping track of animal images uploaded
         //images deposited into /Content/Images/Animals/{id}.{extension}
         public bool AnimalHasPic { get; set; }
         public string PicExtension { get; set; }
