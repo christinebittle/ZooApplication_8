@@ -425,7 +425,7 @@ namespace ZooApplication.Controllers
             if (animal.AnimalHasPic && animal.PicExtension != "")
             {
                 //also delete image from path
-                string path = HttpContext.Current.Server.MapPath("~/Content/Players/" + id + "." + animal.PicExtension);
+                string path = HttpContext.Current.Server.MapPath("~/Content/Images/Animals/" + id + "." + animal.PicExtension);
                 if (System.IO.File.Exists(path))
                 {
                     Debug.WriteLine("File exists... preparing to delete!");
