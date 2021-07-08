@@ -2,12 +2,18 @@
 
 The first part of our Zoo Application. This features the use of Code-First Migrations to create our database, and WebAPI and LINQ to perform CRUD operations.
 
-Videos which cover this codebase:
+Videos which include this codebase:
 - [Building With ASP.NET - Project Setup](https://youtu.be/NSpYP1YW9p0)
 - [Building with ASP.NET - Object Relational Mapping](https://youtu.be/V1emgCxxRtI)
 - [Building with ASP.NET - Base CRUD](https://youtu.be/uEgWxIZmX48)
 - [Building with ASP.NET - HTTP Client & Views](https://youtu.be/dFIaeluKcAA)
 - [Building with ASP.NET - ViewModels and Relationships](https://www.youtube.com/watch?v=mqXVCNdV_DQ)
+
+# Scope
+- Manage Animal, Species information
+- Manage Trivia for Species
+- Manage Keepers and associations between Keepers and animals
+- Manage Tickets and Bookings
 
 # Running this project 
 - Make sure there is an App_Data folder in the project (Right click solution > View in File Explorer)
@@ -32,9 +38,4 @@ curl -d "" https://localhost:44324/api/animaldata/deleteanimal/{id}
 Update an Animal (existing animal info including id must be included in animal.json)
 curl -H "Content-Type:application/json" -d @animal.json https://localhost:44324/api/animaldata/updateanimal/{id}
 
-# Running the Views for List, Details, New
-- Use SQL Server Object Explorer to add a new Species
-- Take note of the Species ID
-- Navigate to /Animal/New
-- Input the Name, Weight(kg) and Species ID
-- click "Add"
+
