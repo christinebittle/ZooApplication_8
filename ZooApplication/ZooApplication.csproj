@@ -183,12 +183,15 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AnimalController.cs" />
     <Compile Include="Controllers\AnimalDataController.cs" />
+    <Compile Include="Controllers\BookingDataController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KeeperController.cs" />
     <Compile Include="Controllers\KeeperDataController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\SpeciesController.cs" />
     <Compile Include="Controllers\SpeciesDataController.cs" />
+    <Compile Include="Controllers\TicketDataController.cs" />
+    <Compile Include="Controllers\TriviaDataController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -220,13 +223,25 @@
     <Compile Include="Migrations\202106112252483_animalpic.Designer.cs">
       <DependentUpon>202106112252483_animalpic.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202107081503507_ticket-trivia-booking.cs" />
+    <Compile Include="Migrations\202107081503507_ticket-trivia-booking.Designer.cs">
+      <DependentUpon>202107081503507_ticket-trivia-booking.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202107081505428_ticket-trivia-booking2.cs" />
+    <Compile Include="Migrations\202107081505428_ticket-trivia-booking2.Designer.cs">
+      <DependentUpon>202107081505428_ticket-trivia-booking2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Animal.cs" />
+    <Compile Include="Models\BookingxTicket.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Keeper.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Booking.cs" />
     <Compile Include="Models\Species.cs" />
+    <Compile Include="Models\Ticket.cs" />
+    <Compile Include="Models\Trivia.cs" />
     <Compile Include="Models\ViewModels\DetailsAnimal.cs" />
     <Compile Include="Models\ViewModels\DetailsKeeper.cs" />
     <Compile Include="Models\ViewModels\DetailsSpecies.cs" />
@@ -313,6 +328,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\Images\Animals\" />
+    <Folder Include="Views\Trivia\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -348,6 +364,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202106112252483_animalpic.resx">
       <DependentUpon>202106112252483_animalpic.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202107081503507_ticket-trivia-booking.resx">
+      <DependentUpon>202107081503507_ticket-trivia-booking.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202107081505428_ticket-trivia-booking2.resx">
+      <DependentUpon>202107081505428_ticket-trivia-booking2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

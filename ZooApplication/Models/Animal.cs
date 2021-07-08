@@ -21,6 +21,9 @@ namespace ZooApplication.Models
         public bool AnimalHasPic { get; set; }
         public string PicExtension { get; set; }
 
+        public Sex AnimalSex { get; set;}
+
+
         //An animal belongs to one species
         //A species can have many animals
         [ForeignKey("Species")]
@@ -50,6 +53,12 @@ namespace ZooApplication.Models
         public string PicExtension { get; set; }
 
 
+    }
+
+    public enum Sex
+    {
+        Male,
+        Female
     }
 
 }

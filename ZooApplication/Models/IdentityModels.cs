@@ -33,6 +33,14 @@ namespace ZooApplication.Models
 
         public DbSet<Keeper> Keepers { get; set; }
 
+        public DbSet<Trivia> Trivias { get; set; }
+        public DbSet<Booking> Bookings { get; set; }
+
+        public DbSet<Ticket> Tickets { get; set; }
+
+        public DbSet<BookingxTicket> BookingxTickets {get;set;}
+
+
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();

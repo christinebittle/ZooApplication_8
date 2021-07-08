@@ -15,6 +15,14 @@ namespace ZooApplication.Models
         public string SpeciesName { get; set; }
 
         public bool SpeciesEndangered { get; set; }
+
+        public IEnumerable<Trivia> Trivias { get; set; }
+
+        //whether the species is currently available at the zoo
+        public bool SpeciesAvailable { get; set; }
+
+        //todo: show featured species on homepage
+        public bool SpeciesFeatured { get; set; }
     }
 
     public class SpeciesDto
