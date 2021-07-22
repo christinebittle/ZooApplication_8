@@ -23,6 +23,14 @@
         <div>Endangered: @Model.SelectedSpecies.SpeciesEndangered</div>
     </div>
     <div class="col-md-6 col-sm-12">
+        <h3>Trivia:</h3>
+       
+        @foreach (var trivia in Model.RelatedTrivias)
+        {
+            <h4>@trivia.TriviaTitle</h4>
+            <p>@trivia.TriviaDesc</p>
+        }
+        
         <h3>Our @(Model.SelectedSpecies.SpeciesName)s</h3>
         @foreach (var animal in Model.RelatedAnimals)
         {

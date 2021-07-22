@@ -18,7 +18,7 @@ namespace ZooApplication.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         /// <summary>
-        /// Returns all Speciess in the system.
+        /// Returns all Species in the system.
         /// </summary>
         /// <returns>
         /// HEADER: 200 (OK)
@@ -45,7 +45,7 @@ namespace ZooApplication.Controllers
         }
 
         /// <summary>
-        /// Returns all Speciess in the system.
+        /// Returns all Species in the system.
         /// </summary>
         /// <returns>
         /// HEADER: 200 (OK)

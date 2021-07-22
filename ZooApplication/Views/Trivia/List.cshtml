@@ -1,0 +1,15 @@
+﻿@model IEnumerable<ZooApplication.Models.TriviaDto>
+@{
+    ViewBag.Title = "List";
+}
+
+<h2>List</h2>
+<a href="/Trivia/New">New Trivia</a>
+@foreach(var Trivia in Model)
+{
+    <h2><a href="/Trivia/Details/@Trivia.TriviaID">@Trivia.TriviaTitle</a></h2>
+    <div>Description: @Trivia.TriviaDesc</div>
+    <div>Species: @Trivia.SpeciesName</div>
+
+
+}

@@ -16,7 +16,7 @@ namespace ZooApplication.Models
 
         public bool SpeciesEndangered { get; set; }
 
-        public IEnumerable<Trivia> Trivias { get; set; }
+        public ICollection<Trivia> Trivias { get; set; }
 
         //whether the species is currently available at the zoo
         public bool SpeciesAvailable { get; set; }

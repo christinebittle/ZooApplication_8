@@ -1,0 +1,13 @@
+﻿@model ZooApplication.Models.TicketDto
+
+@{
+    ViewBag.Title = "DeleteConfirm";
+}
+
+<h2>Are you sure you want to delete this Ticket?</h2>
+<a href="/Ticket/List">Cancel</a>
+<div>Type: @Model.TicketType</div>
+<div>Price: @Model.TicketPrice</div>
+<form action="/Ticket/Delete/@Model.TicketID" method="POST">
+    <input type="submit" value="Confirm Delete"/>
+</form>

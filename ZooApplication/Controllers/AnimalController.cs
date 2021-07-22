@@ -143,7 +143,7 @@ namespace ZooApplication.Controllers
             GetApplicationCookie();//get token credentials
             Debug.WriteLine("Attempting to unassociate animal :" + id + " with keeper: " + KeeperID);
 
-            //call our api to associate animal with keeper
+            //call our api to unassociate animal with keeper
             string url = "animaldata/unassociateanimalwithkeeper/" + id + "/" + KeeperID;
             HttpContent content = new StringContent("");
             content.Headers.ContentType.MediaType = "application/json";

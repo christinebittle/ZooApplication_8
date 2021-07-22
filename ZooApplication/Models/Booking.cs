@@ -16,7 +16,17 @@ namespace ZooApplication.Models
         public string BookingPhone { get; set; }
         public DateTime BookingDate { get; set; }
 
+        [ForeignKey("ApplicationUser")]
+        public string UserID { get; set; }
+        public virtual ApplicationUser ApplicationUser { get; set; }
 
+    }
 
+    public class BookingDto
+    {
+        public int BookingID { get; set; }
+        public string BookingName { get; set; }
+        public string BookingPhone { get; set; }
+        public DateTime BookingDate { get; set; }
     }
 }

@@ -11,6 +11,7 @@ namespace ZooApplication.Models
     public class Trivia
     {
         [Key]
+        public int TriviaID { get; set; }
         public string TriviaTitle { get; set; }
         public string TriviaDesc { get; set; }
 
@@ -22,6 +23,7 @@ namespace ZooApplication.Models
 
     public class TriviaDto
     {
+        public int TriviaID { get; set; }
         public string TriviaTitle { get; set; }
         public string TriviaDesc { get; set; }
         public int SpeciesID { get; set; }

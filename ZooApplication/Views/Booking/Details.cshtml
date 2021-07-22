@@ -1,0 +1,32 @@
+﻿@model ZooApplication.Models.ViewModels.DetailsBooking
+
+
+@{
+    ViewBag.Title = "View";
+}
+<h2>@Model.SelectedBooking.BookingName @Model.SelectedBooking.BookingPhone</h2>
+<nav>
+    <ul>
+        <li><a href="/Booking/List">Go back to list</a></li>
+        <li><a href="/Booking/Edit/@Model.SelectedBooking.BookingID">Update</a></li>
+        <li><a style="color:#ab2020;" href="/Booking/DeleteConfirm/@Model.SelectedBooking.BookingID">Delete</a></li>
+    </ul>
+</nav>
+<div class="row">
+    <div class="col-md-6 col-sm-12">
+       <div>Name: @Model.SelectedBooking.BookingName</div>
+       <div>Phone: @Model.SelectedBooking.BookingPhone</div>
+       <div>Date: @Model.SelectedBooking.BookingDate.ToString("yyyy-MM-dd")</div>
+    </div>
+
+
+    <div class="col-md-6 col-sm-12">
+        <h4>Tickets:</h4>
+        @foreach (var ticket in Model.BookedTickets)
+        {
+            
+            <div>@ticket.TicketQty x @ticket.TicketType ($@ticket.TicketPrice) = $@(ticket.TicketPrice*ticket.TicketQty)</div><br />
+
+        }
+    </div>
+</div>

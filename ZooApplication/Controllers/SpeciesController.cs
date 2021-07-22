@@ -72,6 +72,13 @@ namespace ZooApplication.Controllers
 
             ViewModel.RelatedAnimals = RelatedAnimals;
 
+            //show all trivia about this species
+            url = "TriviaData/ListTriviasForSpecies/" + id;
+            response = client.GetAsync(url).Result;
+            IEnumerable<TriviaDto> RelatedTrivias = response.Content.ReadAsAsync<IEnumerable<TriviaDto>>().Result;
+
+            ViewModel.RelatedTrivias = RelatedTrivias;
+
 
             return View(ViewModel);
         }

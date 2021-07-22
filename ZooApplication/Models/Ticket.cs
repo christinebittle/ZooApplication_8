@@ -17,4 +17,12 @@ namespace ZooApplication.Models
         public decimal TicketPrice { get; set; }
         
     }
+
+    public class TicketDto
+    {
+        public int TicketID { get; set; }
+        public string TicketType { get; set; }
+        //current price of this ticket
+        public decimal TicketPrice { get; set; }
+    }
 }

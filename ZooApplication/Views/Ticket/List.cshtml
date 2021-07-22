@@ -1,0 +1,11 @@
+﻿@model IEnumerable<ZooApplication.Models.TicketDto>
+@{
+    ViewBag.Title = "List";
+}
+
+<h2>List</h2>
+<a href="/Ticket/New">New Ticket</a>
+@foreach(var Ticket in Model)
+{
+    <h2><a href="/Ticket/Details/@Ticket.TicketID">@Ticket.TicketPrice, @Ticket.TicketType</a></h2>
+}

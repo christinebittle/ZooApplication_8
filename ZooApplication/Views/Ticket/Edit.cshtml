@@ -1,0 +1,31 @@
+﻿@model ZooApplication.Models.TicketDto
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Update Ticket</h2>
+<nav>
+    <ul>
+        <li><a href="/Ticket/List">Go back to list</a></li>
+      
+        <li><a style="color:#ab2020;" href="/Ticket/DeleteConfirm/@Model.TicketID">Delete</a></li>
+    </ul>
+</nav>
+<form action="/Ticket/Update/@Model.TicketID" method="POST">
+    <div style="display:none;">
+        @* Pass through the Ticket ID *@
+        <input type="text" name="TicketID" value="@Model.TicketID" />
+    </div>
+    <div>
+        <label>First Name:</label> <input type="text" name="TicketType" value="@Model.TicketType" />
+    </div>
+    <div>
+        <label>Last Name:</label> <input type="text" name="TicketPrice" value="@Model.TicketPrice" />
+    </div>
+    
+    <div>
+        <input type="submit" value="Update Ticket" />
+
+    </div>
+</form>

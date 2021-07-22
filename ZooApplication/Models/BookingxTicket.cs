@@ -26,4 +26,16 @@ namespace ZooApplication.Models
         //logs price of ticket when it was paid
         public decimal TicketPrice { get; set; }
     }
+
+    public class BookingXTicketDto
+    {
+        public int BookingXTicketID { get; set; }
+        public string TicketType { get; set; }
+
+        public int TicketQty { get; set; }
+
+        //logs price of ticket when it was paid
+        public decimal TicketPrice { get; set; }
+
+    }
 }

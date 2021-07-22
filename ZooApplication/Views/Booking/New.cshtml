@@ -1,0 +1,22 @@
+﻿
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create Booking</h2>
+<form action="/Booking/Create" method="POST">
+    <div>
+        <label>Name:</label> <input type="text" name="BookingName" />
+    </div>
+    <div>
+        <label>Phone:</label> <input type="text" name="BookingPhone" />
+    </div>
+    <div>
+        <label>Date:</label> <input type="date" value="@System.DateTime.Now.ToString("yyyy-MM-dd")" name="BookingDate" />
+    </div>
+    <div>
+        <input type="submit" value="Create Booking" />
+
+    </div>
+</form>

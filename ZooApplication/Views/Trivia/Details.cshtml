@@ -1,0 +1,23 @@
+﻿@model ZooApplication.Models.TriviaDto
+@{
+    ViewBag.Title = "View";
+}
+<h2>@Model.TriviaTitle</h2>
+<nav>
+    <ul>
+        <li><a href="/Trivia/List">Go back to list</a></li>
+        <li><a href="/Trivia/Edit/@Model.TriviaID">Update</a></li>
+        <li><a style="color:#ab2020;" href="/Trivia/DeleteConfirm/@Model.TriviaID">Delete</a></li>
+    </ul>
+</nav>
+<div class="row">
+    <div class="col-md-6 col-sm-12">
+        <div>@Model.TriviaTitle</div>
+        <div>@Model.TriviaDesc</div>
+        <div>Species: @Model.SpeciesName</div>
+    </div>
+    <div class="col-md-6 col-sm-12">
+       
+    </div>
+
+</div>

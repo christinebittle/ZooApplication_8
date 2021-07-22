@@ -1,0 +1,19 @@
+﻿@model ZooApplication.Models.TriviaDto
+
+@{
+    ViewBag.Title = "DeleteConfirm";
+}
+
+<h2>Are you sure you want to delete this Trivia?</h2>
+<nav>
+    <ul>
+        <li><a href="/Trivia/List">Cancel</a></li>
+        <li><a href="/Trivia/Edit/@Model.TriviaID">Update</a></li>
+    </ul>
+</nav>
+<h3>@Model.TriviaTitle</h3>
+<div>Description: @Model.TriviaDesc kg</div>
+<div>Species: @Model.SpeciesName</div>
+<form action="/Trivia/Delete/@Model.TriviaID" method="POST">
+    <input type="submit" value="Confirm Delete"/>
+</form>

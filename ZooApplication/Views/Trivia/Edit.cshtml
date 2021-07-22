@@ -1,0 +1,54 @@
+﻿@model ZooApplication.Models.ViewModels.UpdateTrivia
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Update Trivia</h2>
+<nav>
+    <ul>
+        <li><a href="/Trivia/List">Go back to list</a></li>
+        
+        <li><a style="color:#ab2020;" href="/Trivia/DeleteConfirm/@Model.SelectedTrivia.TriviaID">Delete</a></li>
+    </ul>
+</nav>
+<form action="/Trivia/Update/@Model.SelectedTrivia.TriviaID" method="POST">
+    <div class="row">
+        <div class="col-md-6 col-sm-12">
+            <div style="display:none;">
+                @* Pass through the Trivia ID *@
+                <input type="text" name="TriviaID" value="@Model.SelectedTrivia.TriviaID" />
+            </div>
+            <div>
+                <label>Name:</label> <input type="text" name="TriviaTitle" value="@Model.SelectedTrivia.TriviaTitle" />
+            </div>
+            <div>
+                <label>Weight (kg):</label> <input  name="TriviaDesc" value="@Model.SelectedTrivia.TriviaDesc" />
+            </div>
+            <div>
+                <label>Species ID:</label>
+
+                <select name="SpeciesID">
+                    @foreach (var species in Model.PotentialSpecies)
+                    {
+                        var selected = "";
+                        if (species.SpeciesID == Model.SelectedTrivia.SpeciesID)
+                        {
+                            selected = "selected";
+                        }
+                        <option value="@species.SpeciesID" @selected>@species.SpeciesName</option>
+
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+            
+        </div>
+    </div>
+    <div>
+        <input type="submit" value="Update Trivia" />
+
+    </div>
+
+</form>

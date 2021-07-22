@@ -1,0 +1,34 @@
+﻿@model ZooApplication.Models.BookingDto
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Update Booking</h2>
+<nav>
+    <ul>
+        <li><a href="/Booking/List">Go back to list</a></li>
+      
+        <li><a style="color:#ab2020;" href="/Booking/DeleteConfirm/@Model.BookingID">Delete</a></li>
+    </ul>
+</nav>
+<form action="/Booking/Update/@Model.BookingID" method="POST">
+    <div style="display:none;">
+        @* Pass through the Booking ID *@
+        <input type="text" name="BookingID" value="@Model.BookingID" />
+    </div>
+    <div>
+        <label>Name:</label> <input type="text" name="BookingName" value="@Model.BookingName" />
+    </div>
+    <div>
+        <label>Phone:</label> <input type="text" name="BookingPhone" value="@Model.BookingPhone" />
+    </div>
+    <div>
+        <label>Date:</label> <input type="date" value="@Model.BookingDate.ToString("yyyy-MM-dd")" name="BookingDate" />
+    </div>
+
+    <div>
+        <input type="submit" value="Update Booking" />
+
+    </div>
+</form>

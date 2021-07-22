@@ -1,0 +1,19 @@
+﻿
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create Ticket</h2>
+<form action="/Ticket/Create" method="POST">
+    <div>
+        <label>Type:</label> <input type="text" name="TicketType"  />
+    </div>
+    <div>
+        <label>Price:</label> <input type="text" name="TicketPrice" />
+    </div>
+    <div>
+        <input type="submit" value="Create Ticket" />
+
+    </div>
+</form>

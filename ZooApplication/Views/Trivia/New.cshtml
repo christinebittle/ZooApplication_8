@@ -1,0 +1,31 @@
+﻿@model IEnumerable<ZooApplication.Models.SpeciesDto>
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create Trivia</h2>
+<form action="/Trivia/Create" method="POST">
+    <div>
+        <label>Title:</label> <input type="text" name="TriviaTitle" />
+    </div>
+    <div>
+        <label>Desc:</label> <input  name="TriviaDesc" />
+    </div>
+    <div>
+        <label>Species:</label> 
+        <select name="SpeciesID">
+            @foreach (var species in Model)
+            {
+                <option value="@species.SpeciesID">@species.SpeciesName</option>
+
+            }
+        </select>
+    </div>
+    <div>
+        <input type="submit" value="Add Trivia" />
+
+    </div>
+</form>
+
+
