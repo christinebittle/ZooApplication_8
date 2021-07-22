@@ -38,4 +38,9 @@ curl -d "" https://localhost:44324/api/animaldata/deleteanimal/{id}
 Update an Animal (existing animal info including id must be included in animal.json)
 curl -H "Content-Type:application/json" -d @animal.json https://localhost:44324/api/animaldata/updateanimal/{id}
 
-
+# Admin vs Guest
+- Register an account
+- View > SQL Server Object Explorer
+- Create 'Guest', 'Admin' entries in AspNetRoles
+- Copy UserID from AspNetUsers table
+- Create entry between Guest Role x User Id, Admin Role x User Id in AspNetUserRoles bridging table
