@@ -155,6 +155,12 @@ namespace ZooApplication.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    //adding a role of "Guest" to the newly added user.
+                    UserManager.AddToRole(user.Id, "Guest");
+
+                    //Similarly, to remove from a role..
+                    //UserManager.RemoveFromRole(user.Id, "Fan");
+
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771

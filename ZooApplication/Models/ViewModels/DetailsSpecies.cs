@@ -7,6 +7,7 @@ namespace ZooApplication.Models.ViewModels
 {
     public class DetailsSpecies
     {
+        public bool IsAdmin { get; set; }
         public SpeciesDto SelectedSpecies { get; set; }
         //animals that are part of this species
         public IEnumerable<AnimalDto> RelatedAnimals { get; set; }

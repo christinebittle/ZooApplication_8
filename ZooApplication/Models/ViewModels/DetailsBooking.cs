@@ -9,5 +9,7 @@ namespace ZooApplication.Models.ViewModels
     {
         public BookingDto SelectedBooking { get; set; }
         public IEnumerable<BookingXTicketDto> BookedTickets { get; set; }
+
+        
     }
 }

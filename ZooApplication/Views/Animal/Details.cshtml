@@ -6,8 +6,11 @@
 <nav>
     <ul>
         <li><a href="/Animal/List">Go back to list</a></li>
-        <li><a href="/Animal/Edit/@Model.SelectedAnimal.AnimalID">Update</a></li>
-        <li><a style="color:#ab2020;" href="/Animal/DeleteConfirm/@Model.SelectedAnimal.AnimalID">Delete</a></li>
+        @if (Model.IsAdmin)
+        {
+            <li><a href="/Animal/Edit/@Model.SelectedAnimal.AnimalID">Update</a></li>
+            <li><a style="color:#ab2020;" href="/Animal/DeleteConfirm/@Model.SelectedAnimal.AnimalID">Delete</a></li>
+        }
     </ul>
 </nav>
 <div class="row">
@@ -28,23 +31,28 @@
         @foreach (var keeper in Model.ResponsibleKeepers)
         {
 
-            <a href="/Keeper/Details/@keeper.KeeperID">@keeper.KeeperFirstName @keeper.KeeperLastName</a> <a style="color:#ab2020;" href="/Animal/Unassociate/@Model.SelectedAnimal.AnimalID?KeeperID=@keeper.KeeperID">[x]</a><br />
+            <a href="/Keeper/Details/@keeper.KeeperID">@keeper.KeeperFirstName @keeper.KeeperLastName</a>
+            if(Model.IsAdmin){
+                <a style="color:#ab2020;" href="/Animal/Unassociate/@Model.SelectedAnimal.AnimalID?KeeperID=@keeper.KeeperID">[x]</a>
+            }<br />
         }
+        @if (Model.IsAdmin)
+        {
+            <div>
 
-        <div>
-            
-            <form method="POST" action="/Animal/Associate/@Model.SelectedAnimal.AnimalID">
-                <select name="KeeperID">
-                    <option value="">Select Keeper</option>
-                    @foreach (var keeper in Model.AvailableKeepers)
-                    {
-                        <option value="@keeper.KeeperID">@keeper.KeeperFirstName @keeper.KeeperLastName</option>
-                    }
+                <form method="POST" action="/Animal/Associate/@Model.SelectedAnimal.AnimalID">
+                    <select name="KeeperID">
+                        <option value="">Select Keeper</option>
+                        @foreach (var keeper in Model.AvailableKeepers)
+                        {
+                            <option value="@keeper.KeeperID">@keeper.KeeperFirstName @keeper.KeeperLastName</option>
+                        }
 
-                </select>
-                <input type="submit" value="Add Keeper" />
-            </form>
+                    </select>
+                    <input type="submit" value="Add Keeper" />
+                </form>
+            </div>
+        }
         </div>
-    </div>
 
 </div>

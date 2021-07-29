@@ -28,5 +28,6 @@ namespace ZooApplication.Models
         public string BookingName { get; set; }
         public string BookingPhone { get; set; }
         public DateTime BookingDate { get; set; }
+        public string UserId { get; set; }
     }
 }

@@ -38,15 +38,27 @@ namespace ZooApplication.Controllers
         [Authorize(Roles = "Admin,Guest")]
         public IHttpActionResult ListBookings()
         {
-            List<Booking> Bookings = db.Bookings.ToList();
+            bool isAdmin = User.IsInRole("Admin");
+
+            //Admins see all, guests only see their own
+            List<Booking> Bookings;
+            Debug.WriteLine("id is "+User.Identity.GetUserId());
+            if (isAdmin) Bookings = db.Bookings.ToList();
+            else
+            {
+                string UserId = User.Identity.GetUserId();
+                Bookings = db.Bookings.Where(b => b.UserID == UserId).ToList();
+            }
+
             List<BookingDto> BookingDtos = new List<BookingDto>();
 
-            Bookings.ForEach(a => BookingDtos.Add(new BookingDto()
+            Bookings.ForEach(b => BookingDtos.Add(new BookingDto()
             {
-                BookingID = a.BookingID,
-                BookingName = a.BookingName,
-                BookingPhone = a.BookingPhone,
-                BookingDate = a.BookingDate
+                BookingID = b.BookingID,
+                BookingName = b.BookingName,
+                BookingPhone = b.BookingPhone,
+                BookingDate = b.BookingDate,
+                UserId=b.UserID
             }));
 
             return Ok(BookingDtos);
@@ -80,12 +92,20 @@ namespace ZooApplication.Controllers
                 BookingID = Booking.BookingID,
                 BookingName = Booking.BookingName,
                 BookingPhone = Booking.BookingPhone,
-                BookingDate = Booking.BookingDate
+                BookingDate = Booking.BookingDate,
+                UserId=Booking.UserID
+                
             };
             if (Booking == null)
             {
                 return NotFound();
             }
+
+            //do not process if the (user is not an admin) and (the booking does not belong to the user)
+            bool isAdmin = User.IsInRole("Admin");
+            //Forbidden() isn't a natively implemented status like BadRequest()
+            if (!isAdmin && (Booking.UserID != User.Identity.GetUserId())) return StatusCode(HttpStatusCode.Forbidden);
+
 
             return Ok(BookingDto);
         }
@@ -113,17 +133,29 @@ namespace ZooApplication.Controllers
         {
             if (!ModelState.IsValid)
             {
+                Debug.WriteLine("bad model state");
                 return BadRequest(ModelState);
             }
 
             if (id != Booking.BookingID)
             {
-
+                Debug.WriteLine("id mismatch");
                 return BadRequest();
             }
 
+            //do not process if the (user is not an admin) and (the booking does not belong to the user)
+            bool isAdmin = User.IsInRole("Admin");
+            //Forbidden() isn't a natively implemented status like BadRequest()
+            if (!isAdmin && (Booking.UserID != User.Identity.GetUserId()))
+            {
+                Debug.WriteLine("not allowed. booking user"+ Booking.UserID+" user "+User.Identity.GetUserId());
+                return StatusCode(HttpStatusCode.Forbidden);
+            }
+
             db.Entry(Booking).State = EntityState.Modified;
-          
+            //do not modify the attached user id on update
+            db.Entry(Booking).Property(b => b.UserID).IsModified = false;
+
             try
             {
                 db.SaveChanges();
@@ -132,6 +164,7 @@ namespace ZooApplication.Controllers
             {
                 if (!BookingExists(id))
                 {
+                    Debug.WriteLine("not found");
                     return NotFound();
                 }
                 else
@@ -174,6 +207,21 @@ namespace ZooApplication.Controllers
             db.Bookings.Add(Booking);
             db.SaveChanges();
 
+            //add one of each ticket at 0 qty
+            List<Ticket> Tickets = db.Tickets.ToList();
+            Tickets.ForEach(t =>
+                db.BookingxTickets.Add(
+                    new BookingxTicket
+                    {
+                        TicketID = t.TicketID,
+                        BookingID = Booking.BookingID,
+                        TicketQty = 0,
+                        TicketPrice = t.TicketPrice
+                    }
+                )
+            );
+            db.SaveChanges();
+
             return CreatedAtRoute("DefaultApi", new { id = Booking.BookingID }, Booking);
         }
 
@@ -201,7 +249,11 @@ namespace ZooApplication.Controllers
                 return NotFound();
             }
 
-            
+            //do not process if the (user is not an admin) and (the booking does not belong to the user)
+            bool isAdmin = User.IsInRole("Admin");
+            //Forbidden() isn't a natively implemented status like BadRequest()
+            if (!isAdmin && (Booking.UserID != User.Identity.GetUserId())) return StatusCode(HttpStatusCode.Forbidden);
+
 
             db.Bookings.Remove(Booking);
             db.SaveChanges();

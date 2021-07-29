@@ -1,15 +1,49 @@
-﻿@model IEnumerable<ZooApplication.Models.AnimalDto>
+﻿@model  ZooApplication.Models.ViewModels.AnimalList
 @{
     ViewBag.Title = "List";
 }
 
 <h2>List</h2>
-<a href="/Animal/New">New Animal</a>
-@foreach(var animal in Model)
+@if (Model.IsAdmin)
 {
-    <h2><a href="/Animal/Details/@animal.AnimalID">@animal.AnimalName</a></h2>
-    <div>weight: @animal.AnimalWeight kg</div>
-    <div>species: @animal.SpeciesName</div>
-
-
+    <a href="/Animal/New">New Animal</a>
 }
+<div>
+    @if (Model.Animals.Count() > 0 && ViewData["PageNum"] !=null)
+    {
+        int PrevPage = Convert.ToInt32(ViewData["PageNum"]) - 1;
+        int NextPage = Convert.ToInt32(ViewData["PageNum"]) + 1;
+        @Html.ActionLink("Prev", "List", new { PageNum = PrevPage })
+        @ViewData["PageSummary"]
+        @Html.ActionLink("Next", "List", new { PageNum = NextPage })
+    }
+</div>
+<div>IsAdmin:@Model.IsAdmin</div>
+<div>
+    @foreach (var animal in Model.Animals)
+    {
+        <div class="record">
+            <div class="_record">
+                @{
+                    //Use server rendering to determine an image
+                    string pic = "/Content/Images/Animals/default.jpg";
+                    string alt = "No Profile Picture Provided.";
+                    if (animal.AnimalHasPic)
+                    {
+                        pic = "/Content/Images/Animals/" + animal.AnimalID + "." + animal.PicExtension;
+                        alt = "picture of " + animal.AnimalName + "(" + animal.SpeciesName + ")";
+                    }
+                }
+
+                <div class="imagecontainer">
+                    <img src="@pic" alt="@alt" />
+
+                </div>
+                <div class="recordtitle">
+                    <a href="/Animal/Details/@animal.AnimalID">@animal.AnimalName (@animal.SpeciesName)</a>
+                </div>
+            </div>
+        </div>
+    }
+    <div style="clear:both"></div>
+</div>

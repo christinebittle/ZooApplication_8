@@ -3,13 +3,13 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - ZooApp</title>
+    <title>@ViewBag.Title - ADMIN ZooApp</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <div style="background:darkgreen; color:#ffffff;" class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -17,7 +17,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("ZooApp", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("ZooApp Admin", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -25,7 +25,7 @@
                     <li>@Html.ActionLink("Animals", "List", "Animal")</li>
                     <li>@Html.ActionLink("Species", "List", "Species")</li>
                     <li>@Html.ActionLink("Keepers", "List", "Keeper")</li>
-                    <li>@Html.ActionLink("My Bookings", "List", "Booking")</li>
+                    <li>@Html.ActionLink("All Bookings", "List", "Booking")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

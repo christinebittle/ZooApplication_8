@@ -253,11 +253,15 @@
     <Compile Include="Models\Species.cs" />
     <Compile Include="Models\Ticket.cs" />
     <Compile Include="Models\Trivia.cs" />
+    <Compile Include="Models\ViewModels\AnimalList.cs" />
     <Compile Include="Models\ViewModels\DetailsAnimal.cs" />
     <Compile Include="Models\ViewModels\DetailsBooking.cs" />
     <Compile Include="Models\ViewModels\DetailsKeeper.cs" />
     <Compile Include="Models\ViewModels\DetailsSpecies.cs" />
     <Compile Include="Models\ViewModels\DetailsTicket.cs" />
+    <Compile Include="Models\ViewModels\KeeperList.cs" />
+    <Compile Include="Models\ViewModels\SpeciesList.cs" />
+    <Compile Include="Models\ViewModels\TicketList.cs" />
     <Compile Include="Models\ViewModels\UpdateAnimal.cs" />
     <Compile Include="Models\ViewModels\UpdateTrivia.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -357,6 +361,7 @@
     <Content Include="Views\Trivia\Error.cshtml" />
     <Content Include="Views\Trivia\List.cshtml" />
     <Content Include="Views\Trivia\New.cshtml" />
+    <Content Include="Views\Shared\_LayoutAdmin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

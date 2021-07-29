@@ -23,7 +23,46 @@ textarea {
     max-width: 280px;
 }
 
-
+.ledgeritem {
+    margin-bottom: 10px;
+}
+.ledgeritem input{width:25px; height:25px;}
+.ledgeritem form{display:inline;}
 .nav > li > a { padding-left: 6px; padding-right:6px;}
 nav ul {padding-left:0px;}
 nav ul li{list-style-type:none; display:inline-block; margin-right:15px;}
+
+.record {
+    /*4 column layout*/
+    width: 22%;
+    margin-right: 1.5%;
+    margin-left: 1.5%;
+    float: left;
+    position: relative;
+    border: 1px solid #dedede;
+    margin-bottom: 20px;
+}
+
+._record {
+    padding: 10px;
+}
+
+.recordtitle {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.imagecontainer {
+    border-radius: 50%;
+    overflow: hidden;
+    width: 80%;
+    margin: 0 auto;
+}
+
+.imagecontainer.featured {
+    max-width: 200px;
+}
+
+.imagecontainer img {
+    width: 100%;
+}

@@ -58,12 +58,15 @@ namespace ZooApplication.Controllers
             return;
         }
 
-        // GET: Animal/List
-        public ActionResult List()
+        // GET: Animal/List?PageNum={PageNum}
+        public ActionResult List(int PageNum=0)
         {
             //objective: communicate with our animal data api to retrieve a list of animals
             //curl https://localhost:44324/api/animaldata/listanimals
 
+            AnimalList ViewModel = new AnimalList();
+            if (User.Identity.IsAuthenticated && User.IsInRole("Admin")) ViewModel.IsAdmin = true;
+            else ViewModel.IsAdmin = false;
            
             string url = "animaldata/listanimals";
             HttpResponseMessage response = client.GetAsync(url).Result;
@@ -75,14 +78,53 @@ namespace ZooApplication.Controllers
             //Debug.WriteLine("Number of animals received : ");
             //Debug.WriteLine(animals.Count());
 
+            // -- Start of Pagination Algorithm --
 
-            return View(animals);
+            // Find the total number of players
+            int AnimalCount = animals.Count();
+            // Number of players to display per page
+            int PerPage = 4;
+            // Determines the maximum number of pages (rounded up), assuming a page 0 start.
+            int MaxPage = (int)Math.Ceiling((decimal)AnimalCount / PerPage) - 1;
+
+            // Lower boundary for Max Page
+            if (MaxPage < 0) MaxPage = 0;
+            // Lower boundary for Page Number
+            if (PageNum < 0) PageNum = 0;
+            // Upper Bound for Page Number
+            if (PageNum > MaxPage) PageNum = MaxPage;
+
+            // The Record Index of our Page Start
+            int StartIndex = PerPage * PageNum;
+
+            //Helps us generate the HTML which shows "Page 1 of ..." on the list view
+            ViewData["PageNum"] = PageNum;
+            ViewData["PageSummary"] = " " + (PageNum + 1) + " of " + (MaxPage + 1) + " ";
+
+            // -- End of Pagination Algorithm --
+
+            //Send another request to get the page slice of the full list
+            url = "AnimalData/ListAnimalsPage/" + StartIndex + "/" + PerPage;
+            response = client.GetAsync(url).Result;
+
+            // Retrieve the response of the HTTP Request
+            IEnumerable<AnimalDto> SelectedAnimalsPage = response.Content.ReadAsAsync<IEnumerable<AnimalDto>>().Result;
+
+            ViewModel.Animals = SelectedAnimalsPage;
+
+
+
+            return View(ViewModel);
         }
 
         // GET: Animal/Details/5
         public ActionResult Details(int id)
         {
             DetailsAnimal ViewModel = new DetailsAnimal();
+
+            
+            if (User.Identity.IsAuthenticated && User.IsInRole("Admin")) ViewModel.IsAdmin = true;
+            else ViewModel.IsAdmin = false;
 
             //objective: communicate with our animal data api to retrieve one animal
             //curl https://localhost:44324/api/animaldata/findanimal/{id}

@@ -32,6 +32,9 @@ namespace ZooApplication.Models
         public int BookingXTicketID { get; set; }
         public string TicketType { get; set; }
 
+        public int TicketID { get; set; }
+        public int BookingID { get; set; }
+
         public int TicketQty { get; set; }
 
         //logs price of ticket when it was paid

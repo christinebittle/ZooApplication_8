@@ -50,6 +50,38 @@ namespace ZooApplication.Controllers
         }
 
         /// <summary>
+        /// Returns all animals in the system.
+        /// </summary>
+        /// <returns>
+        /// HEADER: 200 (OK)
+        /// CONTENT: all animals in the database, including their associated species.
+        /// </returns>
+        /// <example>
+        /// GET: api/AnimalData/ListAnimals
+        /// </example>
+        [HttpGet]
+        [ResponseType(typeof(AnimalDto))]
+        [Route("api/AnimalData/ListAnimalsPage/{StartIndex}/{PerPage}")]
+        public IHttpActionResult ListAnimalsPage(int StartIndex, int PerPage)
+        {
+            List<Animal> Animals = db.Animals.OrderBy(a => a.AnimalID).Skip(StartIndex).Take(PerPage).ToList();
+            List<AnimalDto> AnimalDtos = new List<AnimalDto>();
+
+            Animals.ForEach(a => AnimalDtos.Add(new AnimalDto()
+            {
+                AnimalID = a.AnimalID,
+                AnimalName = a.AnimalName,
+                AnimalWeight = a.AnimalWeight,
+                AnimalHasPic = a.AnimalHasPic,
+                PicExtension = a.PicExtension,
+                SpeciesID = a.Species.SpeciesID,
+                SpeciesName = a.Species.SpeciesName
+            }));
+
+            return Ok(AnimalDtos);
+        }
+
+        /// <summary>
         /// Gathers information about all animals related to a particular species ID
         /// </summary>
         /// <returns>

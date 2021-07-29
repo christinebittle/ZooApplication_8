@@ -13,6 +13,8 @@ using System.Web.Http.Description;
 using ZooApplication.Models;
 using System.Diagnostics;
 
+using Microsoft.AspNet.Identity;
+
 
 namespace ZooApplication.Controllers
 {
@@ -73,6 +75,8 @@ namespace ZooApplication.Controllers
             BxTs.ForEach(bxt => BxTDtos.Add(new BookingXTicketDto()
             {
                 BookingXTicketID = bxt.BookingXTicketID,
+                TicketID=bxt.Ticket.TicketID,
+                BookingID=bxt.Booking.BookingID,
                 TicketType = bxt.Ticket.TicketType,
                 TicketQty = bxt.TicketQty,
                 TicketPrice = bxt.TicketPrice //what was paid, not current cost of ticket (bxt.Ticket.TicketPrice)
@@ -94,46 +98,68 @@ namespace ZooApplication.Controllers
         /// HEADER: 200 (OK)
         /// or
         /// HEADER: 404 (NOT FOUND)
+        /// or
+        /// HEADER: 400 (BAD REQUEST)
         /// </returns>
         /// <example>
         /// POST api/TicketData/AssociateTicketWithBooking/4/3/2
         /// </example>
         [HttpPost]
         [Route("api/TicketData/AssociateTicketWithBooking/{Ticketid}/{Bookingid}/{Qty}")]
-        [Authorize]
+        [Authorize(Roles="Admin,Guest")]
         public IHttpActionResult AssociateTicketWithBooking(int Ticketid, int Bookingid, int Qty)
         {
-            //Find the ticket
+            //no negative quantity
+            if (Qty < 0) return BadRequest();
+
+            
+
+            //Try to Find the ticket
             Ticket SelectedTicket = db.Tickets.Find(Ticketid);
 
-            //Find the booking
+            //Try to Find the booking
             Booking SelectedBooking = db.Bookings.Find(Bookingid);
 
+            //if ticket or booking doesn't exist return 404
             if (SelectedTicket == null || SelectedBooking == null)
             {
                 return NotFound();
             }
 
-            //Get the current price of the ticket
-            decimal TicketPrice = SelectedTicket.TicketPrice;
+            //do not process if the (user is not an admin) and (the booking does not belong to the user)
+            bool isAdmin = User.IsInRole("Admin");
+            //Forbidden() isn't a natively implemented status like BadRequest()
+            if (!isAdmin && (SelectedBooking.UserID != User.Identity.GetUserId())) return StatusCode(HttpStatusCode.Forbidden);
 
-            //Create a new instance of ticket x booking
-            BookingxTicket NewBxT = new BookingxTicket()
+            //try to update an already existing association between the ticket and booking
+            BookingxTicket BookingxTicket = db.BookingxTickets.Where(bxt => (bxt.TicketID == Ticketid && bxt.BookingID == Bookingid)).FirstOrDefault();
+            if (BookingxTicket != null)
             {
-                Ticket = SelectedTicket,
-                Booking = SelectedBooking,
-                TicketQty = Qty,
-                TicketPrice = TicketPrice
-            };
+                BookingxTicket.TicketQty = Qty;
+                //assume previous price
+            }
+            //otherwise add a new association between the ticket and the booking
+            else { 
+                //Get the current price of the ticket
+                decimal TicketPrice = SelectedTicket.TicketPrice;
 
-            db.BookingxTickets.Add(NewBxT);
+                //Create a new instance of ticket x booking
+                BookingxTicket NewBxT = new BookingxTicket()
+                {
+                    Ticket = SelectedTicket,
+                    Booking = SelectedBooking,
+                    TicketQty = Qty,
+                    TicketPrice = TicketPrice
+                };
+                db.BookingxTickets.Add(NewBxT);
+            }
             db.SaveChanges();
-            
             return Ok();
         }
 
         /// <summary>
         /// Removes an association between a particular Booking and a particular Ticket
+        /// function is deprecated (not in use). Just use a different qty with 'AssociateTicketWithBooking'
         /// </summary>
         /// <param name="BxTID">Booking X Ticket Primary key</param>
         /// <returns>
@@ -149,6 +175,7 @@ namespace ZooApplication.Controllers
         [Authorize]
         public IHttpActionResult UnAssociateTicketWithBooking(int BxTID)
         {
+            
             //Note: this could also be done with the two FK ticket ID and booking ID
             //find the booking x ticket
             BookingxTicket SelectedBxT = db.BookingxTickets.Find(BxTID);

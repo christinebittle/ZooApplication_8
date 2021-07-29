@@ -22,11 +22,33 @@
 
     <div class="col-md-6 col-sm-12">
         <h4>Tickets:</h4>
+        @{ 
+            decimal subtotal = 0;
+        }
         @foreach (var ticket in Model.BookedTickets)
         {
-            
-            <div>@ticket.TicketQty x @ticket.TicketType ($@ticket.TicketPrice) = $@(ticket.TicketPrice*ticket.TicketQty)</div><br />
+            subtotal += ticket.TicketPrice * ticket.TicketQty;
+            <div class="ledgeritem">
+                <form action="/Booking/Associate" method="POST">
+                    <input class="hidden" name="TicketID" value="@ticket.TicketID" />
+                    <input class="hidden" name="BookingID" value="@ticket.BookingID" />
+                    <input class="hidden" name="Qty" value="@(ticket.TicketQty+1)"/>
+                    <input type="submit" value="+" />
+                </form>
+                &nbsp;
+                <form action="/Booking/Associate" method="POST">
+                    <input class="hidden" name="TicketID" value="@ticket.TicketID" />
+                    <input class="hidden" name="BookingID" value="@ticket.BookingID" />
+                    <input class="hidden" name="Qty" value="@(ticket.TicketQty-1)" />
+                    <input type="submit" value="-" />
+                </form>
+                &nbsp;
+                @ticket.TicketQty x @ticket.TicketType
+
+            </div>
 
         }
+        <hr />
+        <div>Total : $@subtotal</div>
     </div>
 </div>

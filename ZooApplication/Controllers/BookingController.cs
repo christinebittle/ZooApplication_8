@@ -112,8 +112,7 @@ namespace ZooApplication.Controllers
         }
 
 
-        //POST: Booking/Associate/{BookingID}/{TicketID}/{Qty}
-        [Route("Booking/Associate/{BookingID}/{TicketID}/{Qty}")]
+        //POST: Booking/Associate
         [HttpPost]
         [Authorize(Roles = "Admin,Guest")]
         public ActionResult Associate( int TicketID, int BookingID, int Qty)
@@ -127,11 +126,19 @@ namespace ZooApplication.Controllers
             content.Headers.ContentType.MediaType = "application/json";
             HttpResponseMessage response = client.PostAsync(url, content).Result;
 
-            return RedirectToAction("Details/" + BookingID);
+            if (response.IsSuccessStatusCode)
+            {
+                return RedirectToAction("Details/" + BookingID);
+            }
+            else
+            {
+                return RedirectToAction("Error");
+            }
         }
 
 
         //Get: Booking/UnAssociate/{BxTID}?BookingID={BookingID}
+        //Deprecated. Use Associate instead to change quantity
         [HttpGet]
         [Authorize(Roles = "Admin,Guest")]
         public ActionResult UnAssociate(int id, int BookingID)
@@ -218,11 +225,12 @@ namespace ZooApplication.Controllers
             GetApplicationCookie();//get token credentials   
             string url = "Bookingdata/updateBooking/" + id;
             string jsonpayload = jss.Serialize(Booking);
+            Debug.WriteLine("json payload:" + jsonpayload);
             HttpContent content = new StringContent(jsonpayload);
             content.Headers.ContentType.MediaType = "application/json";
             HttpResponseMessage response = client.PostAsync(url, content).Result;
             Debug.WriteLine(content);
-
+            Debug.WriteLine(response.Content);
             if (response.IsSuccessStatusCode)
             {
                
