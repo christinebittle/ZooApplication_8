@@ -16,10 +16,19 @@ Videos which include this codebase:
 - Manage Tickets and Bookings
 
 # Running this project 
+- Project > ZooApplication Properties > Change target framework to 4.7.1 -> Change back to 4.7.2
 - Make sure there is an App_Data folder in the project (Right click solution > View in File Explorer)
 - Tools > Nuget Package Manager > Package Manage Console > Update-Database
 - Check that the database is created using (View > SQL Server Object Explorer > MSSQLLocalDb > ..)
 - Run API commands through CURL to create new animals
+
+
+# Common Issues and Resolutions
+- (update-database) Could not attach .mdf database SOLUTION: Make sure App_Data folder is created
+- (update-database) Error. 'Type' cannot be null SOLUTION: (issue appears in Visual Studio 2022) Tools > Nuget Package Manager > Manage Nuget Packages for Solution > Install Latest Entity Framework version (eg. 6.4.4), restart visual studio and try again
+- (update-database) System Exception: Exception has been thrown by the target of an invocation POSSIBLE SOLUTION: Project was cloned to a OneDrive or other restricted cloud-based storage. Clone the project repository to the actual drive on the machine.
+- (running server) Could not find part to the path ../bin/roslyn/csc.exe SOLUTION: change target framework to 4.7.1 and back to 4.7.2
+- (running server) Project Failed to build. System.Web.Http does not have reference to serialize... SOLUTION: Solution Explorer > References > Add Reference > System.Web.Extensions
 
 Make sure to utilize jsondata/animal.json to formulate data you wish to send as part of the POST requests. {id} should be replaced with the animal's primary key ID. The port number may not always be the same
 
