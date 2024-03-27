@@ -56,6 +56,8 @@ namespace ZooApplication.Controllers
         /// HEADER: 200 (OK)
         /// CONTENT: all animals in the database, including their associated species.
         /// </returns>
+        /// <param name="StartIndex">The index to start from</param>
+        /// <param name="PerPage">The number of records to take</param>
         /// <example>
         /// GET: api/AnimalData/ListAnimals
         /// </example>
@@ -161,7 +163,7 @@ namespace ZooApplication.Controllers
         /// </example>
         [HttpPost]
         [Route("api/AnimalData/AssociateAnimalWithKeeper/{animalid}/{keeperid}")]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public IHttpActionResult AssociateAnimalWithKeeper(int animalid, int keeperid)
         {
             
@@ -200,7 +202,7 @@ namespace ZooApplication.Controllers
         /// </example>
         [HttpPost]
         [Route("api/AnimalData/UnAssociateAnimalWithKeeper/{animalid}/{keeperid}")]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public IHttpActionResult UnAssociateAnimalWithKeeper(int animalid, int keeperid)
         {
 
@@ -278,7 +280,7 @@ namespace ZooApplication.Controllers
         /// </example>
         [ResponseType(typeof(void))]
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public IHttpActionResult UpdateAnimal(int id, Animal animal)
         { 
             if (!ModelState.IsValid)
@@ -329,6 +331,7 @@ namespace ZooApplication.Controllers
         /// https://stackoverflow.com/questions/28369529/how-to-set-up-a-web-api-controller-for-multipart-form-data
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public IHttpActionResult UploadAnimalPic(int id)
         {
 
@@ -416,7 +419,7 @@ namespace ZooApplication.Controllers
         /// </example>
         [ResponseType(typeof(Animal))]
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public IHttpActionResult AddAnimal(Animal animal)
         {
             if (!ModelState.IsValid)
@@ -445,7 +448,7 @@ namespace ZooApplication.Controllers
         /// </example>
         [ResponseType(typeof(Animal))]
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public IHttpActionResult DeleteAnimal(int id)
         {
             Animal animal = db.Animals.Find(id);

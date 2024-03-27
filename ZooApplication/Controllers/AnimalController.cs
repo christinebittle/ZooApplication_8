@@ -80,9 +80,9 @@ namespace ZooApplication.Controllers
 
             // -- Start of Pagination Algorithm --
 
-            // Find the total number of players
+            // Find the total number of animals
             int AnimalCount = animals.Count();
-            // Number of players to display per page
+            // Number of animals to display per page
             int PerPage = 4;
             // Determines the maximum number of pages (rounded up), assuming a page 0 start.
             int MaxPage = (int)Math.Ceiling((decimal)AnimalCount / PerPage) - 1;
@@ -98,8 +98,8 @@ namespace ZooApplication.Controllers
             int StartIndex = PerPage * PageNum;
 
             //Helps us generate the HTML which shows "Page 1 of ..." on the list view
-            ViewData["PageNum"] = PageNum;
-            ViewData["PageSummary"] = " " + (PageNum + 1) + " of " + (MaxPage + 1) + " ";
+            ViewModel.PageNum = PageNum;
+            ViewModel.PageSummary = " " + (PageNum + 1) + " of " + (MaxPage + 1) + " ";
 
             // -- End of Pagination Algorithm --
 
@@ -161,7 +161,7 @@ namespace ZooApplication.Controllers
 
         //POST: Animal/Associate/{animalid}
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public ActionResult Associate(int id, int KeeperID)
         {
             GetApplicationCookie();//get token credentials
@@ -179,7 +179,7 @@ namespace ZooApplication.Controllers
 
         //Get: Animal/UnAssociate/{id}?KeeperID={keeperID}
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public ActionResult UnAssociate(int id, int KeeperID)
         {
             GetApplicationCookie();//get token credentials
@@ -202,7 +202,7 @@ namespace ZooApplication.Controllers
         }
 
         // GET: Animal/New
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public ActionResult New()
         {
             //information about all species in the system.
@@ -217,7 +217,7 @@ namespace ZooApplication.Controllers
 
         // POST: Animal/Create
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public ActionResult Create(Animal animal)
         {
             GetApplicationCookie();//get token credentials
@@ -248,7 +248,7 @@ namespace ZooApplication.Controllers
         }
 
         // GET: Animal/Edit/5
-        [Authorize]
+        [Authorize(Roles="Admin")]
         public ActionResult Edit(int id)
         {
             UpdateAnimal ViewModel = new UpdateAnimal();
@@ -272,7 +272,7 @@ namespace ZooApplication.Controllers
 
         // POST: Animal/Update/5
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public ActionResult Update(int id, Animal animal, HttpPostedFileBase AnimalPic)
         {
             GetApplicationCookie();//get token credentials   
@@ -311,7 +311,7 @@ namespace ZooApplication.Controllers
         }
 
         // GET: Animal/Delete/5
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public ActionResult DeleteConfirm(int id)
         {
             string url = "animaldata/findanimal/" + id;
@@ -322,7 +322,7 @@ namespace ZooApplication.Controllers
 
         // POST: Animal/Delete/5
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int id)
         {
             GetApplicationCookie();//get token credentials

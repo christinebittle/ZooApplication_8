@@ -9,12 +9,12 @@
     <a href="/Animal/New">New Animal</a>
 }
 <div>
-    @if (Model.Animals.Count() > 0 && ViewData["PageNum"] !=null)
+    @if (Model.Animals.Count() > 0 && Model.PageNum !=null)
     {
-        int PrevPage = Convert.ToInt32(ViewData["PageNum"]) - 1;
-        int NextPage = Convert.ToInt32(ViewData["PageNum"]) + 1;
+        int PrevPage = Convert.ToInt32(Model.PageNum) - 1;
+        int NextPage = Convert.ToInt32(Model.PageNum) + 1;
         @Html.ActionLink("Prev", "List", new { PageNum = PrevPage })
-        @ViewData["PageSummary"]
+        @Model.PageSummary
         @Html.ActionLink("Next", "List", new { PageNum = NextPage })
     }
 </div>
