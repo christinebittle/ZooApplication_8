@@ -112,7 +112,6 @@ namespace ZooApplication.Controllers
             //no negative quantity
             if (Qty < 0) return BadRequest();
 
-            
 
             //Try to Find the ticket
             Ticket SelectedTicket = db.Tickets.Find(Ticketid);

@@ -59,7 +59,7 @@ namespace ZooApplication.Controllers
         /// <param name="StartIndex">The index to start from</param>
         /// <param name="PerPage">The number of records to take</param>
         /// <example>
-        /// GET: api/AnimalData/ListAnimals
+        /// GET: api/AnimalData/ListAnimalsPage/5/10
         /// </example>
         [HttpGet]
         [ResponseType(typeof(AnimalDto))]

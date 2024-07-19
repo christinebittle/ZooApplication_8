@@ -28,7 +28,7 @@ namespace ZooApplication.Controllers
         /// </summary>
         /// <returns>
         /// HEADER: 200 (OK)
-        /// CONTENT: all Bookings in the database, including their associated species.
+        /// CONTENT: all Bookings in the database if the user is an administrator. If the user is a Guest, returns bookings related to their user ID.
         /// </returns>
         /// <example>
         /// GET: api/BookingData/ListBookings
