@@ -68,20 +68,16 @@ namespace ZooApplication.Controllers
             if (User.Identity.IsAuthenticated && User.IsInRole("Admin")) ViewModel.IsAdmin = true;
             else ViewModel.IsAdmin = false;
            
-            string url = "animaldata/listanimals";
+            string url = "animaldata/getanimalcount";
             HttpResponseMessage response = client.GetAsync(url).Result;
 
             //Debug.WriteLine("The response code is ");
             //Debug.WriteLine(response.StatusCode);
 
-            IEnumerable<AnimalDto> animals = response.Content.ReadAsAsync<IEnumerable<AnimalDto>>().Result;
-            //Debug.WriteLine("Number of animals received : ");
-            //Debug.WriteLine(animals.Count());
-
             // -- Start of Pagination Algorithm --
 
             // Find the total number of animals
-            int AnimalCount = animals.Count();
+            int AnimalCount = response.Content.ReadAsAsync<int>().Result;
             // Number of animals to display per page
             int PerPage = 4;
             // Determines the maximum number of pages (rounded up), assuming a page 0 start.

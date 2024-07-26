@@ -50,6 +50,17 @@ namespace ZooApplication.Controllers
         }
 
         /// <summary>
+        /// returns the count of animals in the database. Used for pagination.
+        /// </summary>
+        /// <returns>integer representing the number of animal records</returns>
+        /// <example>GET: api/AnimalData/GetAnimalCount</example>
+        [HttpGet]
+        public int GetAnimalCount()
+        {
+            return db.Animals.Count();
+        }
+
+        /// <summary>
         /// Returns all animals in the system.
         /// </summary>
         /// <returns>
